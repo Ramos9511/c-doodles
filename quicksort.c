@@ -6,7 +6,7 @@
 void quicksort(int a[], int low, int high);
 int divide(int a[], int low, int high);
 
-int main(void)
+int main_01(void)
 {
 	int a[N];
 
