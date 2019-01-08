@@ -15,7 +15,7 @@ bool isEmpty();
 bool isFull();
 int pop();
 
-int mains(void)
+int main(void)
 {
 	/* Testing out */
 
