@@ -7,7 +7,7 @@
 
 /* External variables */
 int stack[STACKSIZE];
-int top = 0;
+int * top = &stack[0];
 
 void clearStack();
 void push(int);
@@ -15,7 +15,7 @@ bool isEmpty();
 bool isFull();
 int pop();
 
-int main(void)
+int mains(void)
 {
 	/* Testing out */
 
@@ -43,17 +43,17 @@ int main(void)
 
 void clearStack()
 {
-	top = 0;
+	top = &stack[0];
 }
 
 bool isEmpty()
 {
-	return top == 0;
+	return top == &stack[0];
 }
 
 bool isFull()
 {
-	return top == STACKSIZE;
+	return top > &stack[STACKSIZE - 1];
 }
 
 void push(int i)
@@ -62,7 +62,7 @@ void push(int i)
 		/* Stack overflow */
 		exit(EXIT_FAILURE);
 	else
-		stack[top++] = i;
+		*top++ = i;
 }
 
 int pop()
@@ -71,6 +71,6 @@ int pop()
 		/* Stack underflow */
 		exit(EXIT_FAILURE);
 	} else {
-		return stack[--top];
+		return *--top;
 	}
 }
