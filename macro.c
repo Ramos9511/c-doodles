@@ -27,6 +27,26 @@ type type##_max(type x, type y)	\
 #define TEST(condition, ...) ((condition) ? 	\
 	printf("passed test: %s\n", #condition) : 	\
 	printf(__VA_ARGS__))
+	
+#define DEBUG
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 256
+#endif
+
+#if 0 //some env aspect to be checked
+#error error message
+#endif
+
+#if defined(WIN32)
+	#define ENV "windows"
+#elif defined(MAC_OS)
+	#define ENV "macos"
+#elif defined(LINUX)
+	#define ENV "linux"
+#else
+	#error no OS specified
+#endif
 
 GENERIC_MAX(int)
 
@@ -49,8 +69,14 @@ BEGIN
 /* 	char s[10];
 	ECHO(s); */
 	
-	TEST(3 > 10, "10 is greater than 3 \n");
-	PRINT(__func__, %s);
+/* 	TEST(3 > 10, "10 is greater than 3 \n");
+	PRINT(__func__, %s); */
+	
+/* 	#if defined(DEBUG)
+		PRINT("Debug mode.\n", %s);
+	#endif */
+	
+	PRINT(ENV, %s);
 	
 	return EXIT_SUCCESS;
 END
