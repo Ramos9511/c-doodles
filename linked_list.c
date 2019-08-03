@@ -19,28 +19,35 @@ void list_print(Node *head_ptr) {
     printf("\n");
 }
 
-/* insertion at beginning of list */
-Node * list_insert(int x, Node *head_ptr) {
+/* insertion at nth position of list */
+Node * list_insert(int x, int n, Node *head_ptr) {
     Node *temp = (Node*)malloc(sizeof(Node));
-    temp->data = x;
-    if (head_ptr)
-       temp -> next = head_ptr; 
-    else
-        temp->next = NULL;
+    temp -> data = x;
+    temp -> next = NULL;
+    // is list empty?
+    if (head_ptr) {
+        // insertion at first position
+        if (n == 1) { 
+            temp -> next = head_ptr;
+        // insertion at other positions
+        } else {
+            Node *temp2 = head_ptr;
+            for (int i = 0; i < n - 2; i++)
+                temp2 = temp2 -> next;
+            temp -> next = temp2 -> next;
+            temp2 -> next = temp;
+            return head_ptr;
+        }
+    }
     return temp;
 }
 
 int main(int argc, char *argv[]) {
     Node *head_ptr = list_new();
-    printf("How many numbers?\n");
-    int n, x;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("Enter the number: \n");
-        scanf("%d", &x);
-        head_ptr = list_insert(x, head_ptr);
-        list_print(head_ptr);
-    }
-    
+    head_ptr = list_insert(2,1,head_ptr);
+    head_ptr = list_insert(3,2,head_ptr);
+    head_ptr = list_insert(4,1,head_ptr);
+    head_ptr = list_insert(5,2,head_ptr);
+    list_print(head_ptr);
     return 0;
 }
