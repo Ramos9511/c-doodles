@@ -27,13 +27,13 @@ void list_print(Node *head_ptr)
 /* insertion at nth position of list */
 void list_insert(int x, int n, Node **head_ptr)
 {
-    Node *temp = (Node*)malloc(sizeof(Node));
+    Node *temp = (Node *)malloc(sizeof(Node));
     temp->data = x;
     temp->next = NULL;
     // insertion at first position
     if (n == 1)
     {
-        temp -> next = *head_ptr;
+        temp->next = *head_ptr;
         *head_ptr = temp;
     }
     // insertion at other positions
@@ -41,22 +41,19 @@ void list_insert(int x, int n, Node **head_ptr)
     {
         Node *temp2 = (*head_ptr);
         for (int i = 0; i < n - 2; i++)
-        {
             temp2 = temp2->next;
-        }
         temp->next = temp2->next;
         temp2->next = temp;
     }
-
 }
 
-Node *list_remove(int n, Node *head_ptr)
+void list_remove(int n, Node **head_ptr)
 {
-    Node *temp = head_ptr;
+    Node *temp = *head_ptr;
     // remove first node
     if (n == 1)
     {
-        head_ptr = temp->next;
+        *head_ptr = temp->next;
         free(temp);
     }
     // nodes in the middle
@@ -68,22 +65,21 @@ Node *list_remove(int n, Node *head_ptr)
         temp->next = temp2->next;
         free(temp2);
     }
-    return head_ptr;
 }
 
-Node *list_reverse(Node *head_ptr)
+void list_reverse(Node **head_ptr)
 {
-   Node *current = head_ptr;
-   Node *prev = NULL;
-   Node *next = NULL;
-   while (current)
-   {
-       next = current -> next;
-       current-> next = prev; 
-       prev = current;          
-       current = next;         
-   }
-   return prev;
+    Node *current = *head_ptr;
+    Node *prev = NULL;
+    Node *next = NULL;
+    while (current)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head_ptr = prev;
 }
 
 // recursive reverse print
@@ -91,33 +87,34 @@ void list_rrprint(Node *head_ptr)
 {
     if (!head_ptr)
         return;
-    list_rrprint(head_ptr -> next);
-    printf("%d ", head_ptr -> data);
+    list_rrprint(head_ptr->next);
+    printf("%d ", head_ptr->data);
 }
 
 // recursive print
 void list_rprint(Node *head_ptr)
 {
-    if (!head_ptr) {
-        printf("%d ", head_ptr -> data);
+    if (!head_ptr)
+    {
+        printf("%d ", head_ptr->data);
         return;
     }
-    printf("%d ", head_ptr -> data);
-    list_rprint(head_ptr -> next);
+    printf("%d ", head_ptr->data);
+    list_rprint(head_ptr->next);
 }
 
 // recursive reverse
 void list_rreverse(Node **head, Node *p)
 {
-    if (p -> next == NULL)
+    if (p->next == NULL)
     {
         (*head) = p;
         return;
     }
-    list_rreverse(head, p -> next);
+    list_rreverse(head, p->next);
     Node *q = p->next;
-    q -> next = p;
-    p -> next = NULL;  
+    q->next = p;
+    p->next = NULL;
 }
 
 /* Test cases */
@@ -128,6 +125,9 @@ int main(int argc, char *argv[])
     list_insert(3, 2, &head_ptr);
     list_insert(4, 1, &head_ptr);
     list_insert(5, 2, &head_ptr);
+    list_print(head_ptr);
+    printf("\n");
+    list_reverse(&head_ptr);
     list_print(head_ptr);
     //printf("\n");
     //list_rrprint(head_ptr);
