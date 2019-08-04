@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct Node
-{
-    int data;
-    struct Node *next;
-} typedef Node;
+#include "linked_list.h"
 
 Node *list_new()
 {
@@ -115,24 +110,4 @@ void list_rreverse(Node **head, Node *p)
     Node *q = p->next;
     q->next = p;
     p->next = NULL;
-}
-
-/* Test cases */
-int main(int argc, char *argv[])
-{
-    Node *head_ptr = list_new();
-    list_insert(2, 1, &head_ptr);
-    list_insert(3, 2, &head_ptr);
-    list_insert(4, 1, &head_ptr);
-    list_insert(5, 2, &head_ptr);
-    list_print(head_ptr);
-    printf("\n");
-    list_reverse(&head_ptr);
-    list_print(head_ptr);
-    //printf("\n");
-    //list_rrprint(head_ptr);
-    //printf("\n");
-    //list_rreverse(&head_ptr, head_ptr);
-    //list_rprint(head_ptr);
-    return 0;
 }
