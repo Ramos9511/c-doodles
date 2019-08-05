@@ -1,53 +1,20 @@
 /***********************************************************************
 *
 * FILENAME:
-*	<filename>
+*	dlinked_list.c
 *
 * DESCRIPTION :
-* 	<short description>
+* 	Implementation of doubly Linked
+*	list api functions
 *
 * AUTHOR:
-* 	WesternSage - <date>
+* 	WesternSage - 04 Agus 2019
 *
 ***********************************************************************/
+
+#include "dlinked_list.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-struct Node {
-	int data;
-	struct Node *next;
-	struct Node *prev;
-} typedef Node;
-
-// TODO: Implement append func
-
-Node *dlist_new();
-Node *dlist_new_node(int x);
-void dlist_print(Node *head);
-void dlist_rprint(Node *head);
-void dlist_insert(int x, Node **head);
-
-/* test cases */
-int main(int argc, char * argv[])
-{
-	Node *head = dlist_new();
-	dlist_insert(2, &head);
-	dlist_print(head);
-	printf("\n");
-	dlist_rprint(head);
-	printf("\n");
-	dlist_insert(4, &head);
-	dlist_print(head);
-	printf("\n");
-	dlist_rprint(head);
-	printf("\n");
-	dlist_insert(6, &head);
-	dlist_print(head);
-	printf("\n");
-	dlist_rprint(head);
-
-	return 0;
-}
 
 Node *dlist_new() {
 	return NULL;
@@ -97,3 +64,25 @@ void dlist_rprint(Node *head)
 		temp = temp->prev;
 	}
 }
+
+// /* test cases */
+// int main(int argc, char * argv[])
+// {
+// 	Node *head = dlist_new();
+// 	dlist_insert(2, &head);
+// 	dlist_print(head);
+// 	printf("\n");
+// 	dlist_rprint(head);
+// 	printf("\n");
+// 	dlist_insert(4, &head);
+// 	dlist_print(head);
+// 	printf("\n");
+// 	dlist_rprint(head);
+// 	printf("\n");
+// 	dlist_insert(6, &head);
+// 	dlist_print(head);
+// 	printf("\n");
+// 	dlist_rprint(head);
+//
+// 	return 0;
+// }
