@@ -1,13 +1,13 @@
 /***********************************************************************
 *
 * FILENAME:
-*		linked_list.c
+*	linked_list.c
 *
 * DESCRIPTION :
-* 		Implementation of Linked list api functions
+* 	Implementation of Linked list api functions
 *
 * AUTHOR:
-* 		WesternSage - 04 Agus 2019
+* 	WesternSage - 04 Agus 2019
 *
 ***********************************************************************/
 

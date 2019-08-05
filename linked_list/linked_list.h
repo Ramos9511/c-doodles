@@ -1,14 +1,14 @@
 /***********************************************************************
 *
 * FILENAME:
-*		linked_list.h
+*	linked_list.h
 *
 * DESCRIPTION :
-* 		Linked list api functions prototypes
-*		and required data structures (e.g. list Node)
+* 	Linked list api functions prototypes
+*	and required data structures (e.g. list Node)
 *
 * AUTHOR:
-* 		WesternSage - 04 Agus 2019
+* 	WesternSage - 04 Agus 2019
 *
 ***********************************************************************/
 

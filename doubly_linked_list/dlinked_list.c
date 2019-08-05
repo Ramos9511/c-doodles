@@ -1,13 +1,13 @@
 /***********************************************************************
 *
 * FILENAME:
-*		<filename>
+*	<filename>
 *
 * DESCRIPTION :
-* 		<short description>
+* 	<short description>
 *
 * AUTHOR:
-* 		WesternSage - <date>
+* 	WesternSage - <date>
 *
 ***********************************************************************/
 #include <stdio.h>
