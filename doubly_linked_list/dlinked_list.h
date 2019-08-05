@@ -24,7 +24,7 @@ struct Node {
 // TODO: Implement delete_list func
 // TODO: Implement get_node_by_pos func
 // TODO: Implement get_node_by_value func
-// TODO: Implement remove by value func
+// TODO: Implement remove_by_value func
 
 Node *dlist_new();                      // create new list
 Node *dlist_new_node(int x);            // create new node
