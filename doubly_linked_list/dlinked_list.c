@@ -19,15 +19,38 @@ struct Node {
 	struct Node *prev;
 } typedef Node;
 
+// TODO: Implement append func
+
+Node *dlist_new();
 Node *dlist_new_node(int x);
 void dlist_print(Node *head);
+void dlist_rprint(Node *head);
 void dlist_insert(int x, Node **head);
 
+/* test cases */
 int main(int argc, char * argv[])
 {
-	printf("%s\n","hello world");
+	Node *head = dlist_new();
+	dlist_insert(2, &head);
+	dlist_print(head);
+	printf("\n");
+	dlist_rprint(head);
+	printf("\n");
+	dlist_insert(4, &head);
+	dlist_print(head);
+	printf("\n");
+	dlist_rprint(head);
+	printf("\n");
+	dlist_insert(6, &head);
+	dlist_print(head);
+	printf("\n");
+	dlist_rprint(head);
 
 	return 0;
+}
+
+Node *dlist_new() {
+	return NULL;
 }
 
 Node *dlist_new_node(int x)
@@ -54,5 +77,23 @@ void dlist_insert(int x, Node **head)
 
 void dlist_print(Node *head)
 {
+	Node *temp = head;
+	while (temp) {
+		printf("%d ", temp->data);
+		temp = temp->next;
+	}
+}
 
+void dlist_rprint(Node *head)
+{
+	Node *temp = head;
+	if (temp == NULL) return;
+	// moving to last node
+	while (temp->next != NULL)
+		temp = temp->next;
+	// moving backwards
+	while (temp != NULL) {
+		printf("%d ", temp->data);
+		temp = temp->prev;
+	}
 }
