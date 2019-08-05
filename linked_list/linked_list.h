@@ -22,13 +22,14 @@ struct Node {
 
 // TODO: Implement append func
 
-Node *list_new();                                   // create empty list
-void list_print(Node *head_ptr);                    // print list
-void list_rprint(Node *head_ptr);                   // recursive print
-void list_rrprint(Node *head_ptr);                  // recursive reverse print
-void list_reverse(Node **head_ptr);                 // revese list
-void list_remove(int n, Node **head_ptr);           // remove item at pos n
+Node *list_new();                               // create empty list
+Node *list_new_node(int x);
+void list_print(Node *head);                    // print list
+void list_rprint(Node *head);                   // recursive print
+void list_rrprint(Node *head);                  // recursive reverse print
+void list_reverse(Node **head);                 // revese list
+void list_remove(int n, Node **head);           // remove item at pos n
 void list_rreverse(Node **head, Node *p);           // recursive reverse
-void list_insert(int x, int n, Node **head_ptr);    // insert x at pos n
+void list_insert(int x, int n, Node **head);    // insert x at pos n
 
 #endif

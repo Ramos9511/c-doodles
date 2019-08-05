@@ -19,8 +19,16 @@ Node *list_new() {
 	return NULL;
 }
 
-void list_print(Node *head_ptr) {
-	Node *temp = head_ptr;
+Node *list_new_node(int x)
+{
+	Node *new_node = (Node*)malloc(sizeof(Node));
+	new_node->data = x;
+	new_node->next = NULL;
+	return new_node;
+}
+
+void list_print(Node *head) {
+	Node *temp = head;
 	while (temp) {
 		printf("%d ", temp->data);
 		temp = temp->next;
@@ -29,30 +37,28 @@ void list_print(Node *head_ptr) {
 
 // TODO: Implement append func
 
-void list_insert(int x, int n, Node **head_ptr)
+void list_insert(int x, int n, Node **head)
 {
-	Node *temp = (Node *)malloc(sizeof(Node));
-	temp->data = x;
-	temp->next = NULL;
+	Node *new_node = list_new_node(x);
 	// insertion at first position
 	if (n == 1) {
-		temp->next = *head_ptr;
-		*head_ptr = temp;
+		new_node->next = *head;
+		*head = new_node;
 	} else {
-		Node *temp2 = (*head_ptr);
+		Node *temp = (*head);
 		for (int i = 0; i < n - 2; i++)
-			temp2 = temp2->next;
-		temp->next = temp2->next;
-		temp2->next = temp;
+			temp = temp->next;
+		new_node->next = temp->next;
+		temp->next = new_node;
 	}
 }
 
-void list_remove(int n, Node **head_ptr)
+void list_remove(int n, Node **head)
 {
-	Node *temp = *head_ptr;
+	Node *temp = *head;
 	// remove first node
 	if (n == 1) {
-		*head_ptr = temp->next;
+		*head = temp->next;
 		free(temp);
 	} else {
 		for (int i = 0; i < n - 2; i++)
@@ -63,9 +69,9 @@ void list_remove(int n, Node **head_ptr)
 	}
 }
 
-void list_reverse(Node **head_ptr)
+void list_reverse(Node **head)
 {
-	Node *current = *head_ptr;
+	Node *current = *head;
 	Node *prev = NULL;
 	Node *next = NULL;
 	while (current) {
@@ -74,25 +80,25 @@ void list_reverse(Node **head_ptr)
 		prev = current;
 		current = next;
 	}
-	*head_ptr = prev;
+	*head = prev;
 }
 
-void list_rrprint(Node *head_ptr)
+void list_rrprint(Node *head)
 {
-	if (!head_ptr)
+	if (!head)
 		return;
-	list_rrprint(head_ptr->next);
-	printf("%d ", head_ptr->data);
+	list_rrprint(head->next);
+	printf("%d ", head->data);
 }
 
-void list_rprint(Node *head_ptr)
+void list_rprint(Node *head)
 {
-	if (!head_ptr) {
-		printf("%d ", head_ptr->data);
+	if (!head) {
+		printf("%d ", head->data);
 		return;
 	}
-	printf("%d ", head_ptr->data);
-	list_rprint(head_ptr->next);
+	printf("%d ", head->data);
+	list_rprint(head->next);
 }
 
 void list_rreverse(Node **head, Node *p)
