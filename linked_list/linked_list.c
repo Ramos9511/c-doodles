@@ -7,7 +7,7 @@
 * 	Implementation of Linked list api functions
 *
 * AUTHOR:
-* 	WesternSage - 04 Agus 2019
+* 	WesternSage - 04 Augus 2019
 *
 ***********************************************************************/
 

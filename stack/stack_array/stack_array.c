@@ -1,13 +1,13 @@
 /***********************************************************************
 *
 * FILENAME:
-*	<filename>
+*	stack_array.c
 *
 * DESCRIPTION :
-* 	<short description>
+* 	Implementation of stack api functions using arrays
 *
 * AUTHOR:
-* 	WesternSage - <date>
+* 	WesternSage - 06 Augus 2019
 *
 ***********************************************************************/
 
