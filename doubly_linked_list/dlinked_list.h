@@ -14,11 +14,7 @@
 #ifndef __DLINKED_LIST_H__
 #define __DLINKED_LIST_H__
 
-struct Node {
-	int data;
-	struct Node *next;
-	struct Node *prev;
-} typedef Node;
+#include "../utils/type_definitions.h"
 
 // TODO: Implement append func
 // TODO: Implement delete_list func

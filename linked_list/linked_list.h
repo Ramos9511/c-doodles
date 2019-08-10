@@ -15,12 +15,8 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-struct Node {
-	int data;
-	struct Node *next;
-} typedef Node;
+#include "../utils/type_definitions.h"
 
-// TODO: Implement append func
 // TODO: Implement delete_list func
 // TODO: Implement get_node_by_pos func
 // TODO: Implement remove by value func
@@ -36,5 +32,6 @@ void list_reverse(Node **head);                 // revese list
 void list_remove(int n, Node **head);           // remove item at pos n
 void list_rreverse(Node **head, Node *p);       // recursive reverse
 void list_insert(int x, int n, Node **head);    // insert x at pos n
+void list_append(int x, Node **head);           // insert x at end of list
 
 #endif

@@ -83,6 +83,19 @@ void list_reverse(Node **head)
 	*head = prev;
 }
 
+void list_append(int x, Node **head) {
+	Node *temp = (*head);
+	Node *new_node = list_new_node(x);
+	if (temp == NULL) {
+		*head = new_node;
+	} else {
+		while (temp->next != NULL)
+			temp = temp->next;
+		new_node->next = temp->next;
+		temp->next = new_node;
+	}
+}
+
 void list_rrprint(Node *head)
 {
 	if (!head)
@@ -112,3 +125,13 @@ void list_rreverse(Node **head, Node *p)
 	q->next = p;
 	p->next = NULL;
 }
+
+// test cases
+// int main(int argc, char const *argv[]) {
+// 	Node * list = list_new();
+// 	list_append(0, &list);
+// 	list_append(1, &list);
+// 	list_append(2, &list);
+// 	list_print(list);
+// 	return 0;
+// }

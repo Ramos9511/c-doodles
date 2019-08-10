@@ -15,9 +15,14 @@
 #include "stack_list.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 Node *stack_new() {
 	return NULL;
+}
+
+bool stack_is_empty(Node *head) {
+	return head == NULL;
 }
 
 int stack_top(Node *head) {
@@ -52,8 +57,8 @@ void stack_push(int x, Node **head)
 // 	printf("%d\n",stack_top(new_stack));
 // 	stack_pop(&new_stack);
 // 	printf("%d\n",stack_top(new_stack));
-// 	stack_pop(&new_stack);
-// 	printf("%d\n",stack_top(new_stack));
+// 	if (stack_is_empty(new_stack))
+// 		printf("%s\n", "stack is empty!");
 //
 // 	return 0;
 // }
