@@ -30,7 +30,7 @@ int main(int argc, char * argv[])
 
   while ((bytes_read = fread(chunk, 1, sizeof(chunk), f)) > 0) {
     for (int i = 0; i < bytes_read; i++)
-      printf("0x%02x ", chunk[i]);
+      printf("0x%02X ", chunk[i]);
     printf("%s","\t" );
     for (int i = 0; i < bytes_read; i++)
       if (isprint(chunk[i]))
