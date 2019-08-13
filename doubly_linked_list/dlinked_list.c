@@ -22,7 +22,7 @@ Node *dlist_new() {
 
 Node *dlist_new_node(int x)
 {
-	Node *new_node = (Node*)malloc(sizeof(Node));
+	Node *new_node = malloc(sizeof(Node));
 	new_node->data = x;
 	new_node->prev = NULL;
 	new_node->next = NULL;

@@ -21,39 +21,50 @@
 
 int main(int argc, char *argv[])
 {
+    if (argc < 2) {
+        fprintf(stderr, "usage: %s LINES\n", argv[0]);
+        return EXIT_FAILURE;
+    }
 
-  int number_of_lines;
-  if (argc == 2) {
-    number_of_lines = atoi(argv[1]);
-  } else {
-    printf("%s\n", "Error!");
-    exit(1);
-  }
+    int number_of_lines = atoi(argv[1]);
+    if (number_of_lines <= 0) {
+        fputs("LINES must be a positive number\n", stderr);
+        return EXIT_FAILURE;
+    }
 
-  FILE *f;
-  if (!(f = fopen("file.txt", "r"))) {
-    printf("%s\n", "Error opening file!\n");
-    exit(1);
-  };
+    FILE *f = fopen("file.txt", "r");
+    if (!f) {
+        perror("file.txt");
+        return EXIT_FAILURE;
+    };
 
-  // pushing lines into stack
+    // push lines into stack
+    Node *stack = stack_new();
+    for (;;) {
+        char *line = malloc(LINE_SIZE);
+        if (!line) {
+            fputs("Out of memory\n", stderr);
+            return EXIT_FAILURE;
+        }
+        if (!fgets(line, LINE_SIZE, f)) {
+            /* assume end of file */
+            free(line);
+            break;
+        }
+        stack_push(line, &stack);
+    }
 
-  int i = 0;
-  char *line, *temp = (char*)malloc(LINE_SIZE);
-  Node *stack = stack_new();
+    // pop and print n lines to screen
+    for (int i = 0; i < number_of_lines; i++) {
+        char *line = stack_top(stack);
+        fputs(line, stdout);
+        free(line);
+        stack_pop(&stack);
+    }
 
-  while (fgets(temp, sizeof(line), f) != NULL) {
-    line = (char*)malloc(LINE_SIZE);
-    strcpy(line, temp);
-    stack_push((void*)line, &stack);
-  }
-
-  // poping and printing n lines to screen
-
-  for (int i = 0; i < number_of_lines; i++) {
-    printf("%s\n",(char*)stack_top(stack));
-    stack_pop(&stack);
-  }
-
-  return 0;
+    // free the remainder of the stack
+    while (stack) {
+        free(stack_top(stack));
+        stack_pop(&stack);
+    }
 }

@@ -32,7 +32,7 @@ char *string_reverse(char *text)
 	int length = strlen(text);
 	printf("%d\n",length );
 	Node *stack = stack_new();
-	char *rstring = (char*)malloc(length + 1);
+	char *rstring = malloc(length + 1);
 	for (int i = 0; i < length; i++)
 		stack_push(text[i], &stack);
 	for (int i = 0; i < length; i++) {

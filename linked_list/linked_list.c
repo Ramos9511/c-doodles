@@ -21,7 +21,7 @@ Node *list_new() {
 
 Node *list_new_node(int x)
 {
-	Node *new_node = (Node*)malloc(sizeof(Node));
+	Node *new_node = malloc(sizeof(Node));
 	new_node->data = x;
 	new_node->next = NULL;
 	return new_node;
@@ -45,7 +45,7 @@ void list_insert(int x, int n, Node **head)
 		new_node->next = *head;
 		*head = new_node;
 	} else {
-		Node *temp = (*head);
+		Node *temp = *head;
 		for (int i = 0; i < n - 2; i++)
 			temp = temp->next;
 		new_node->next = temp->next;

@@ -17,33 +17,37 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-Node *stack_new() {
-	return NULL;
-}
+	Node *stack_new() {
+		return NULL;
+	}
 
-bool stack_is_empty(Node *head) {
-	return head == NULL;
-}
+	bool stack_is_empty(Node *head) {
+		return head == NULL;
+	}
 
-void *stack_top(Node *head) {
-	return head->data;
-}
+	void *stack_top(Node *head) {
+		return head->data;
+	}
 
-void stack_pop(Node **head)
-{
-	if (*head == NULL) return;
-	Node *temp = *head;
-	*head = (*head)->next;
-	free(temp);
-}
+	void stack_pop(Node **head)
+	{
+		if (*head == NULL) return;
+		Node *temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
 
-void stack_push(void *x, Node **head)
-{
-	Node *new_node = (Node*)malloc(sizeof(Node));
-	new_node->data = x;
-	new_node->next = *head;
-	*head = new_node;
-}
+	void stack_push(void *x, Node **head)
+	{
+		Node *new_node = malloc(sizeof(Node));
+		if (!new_node) {
+			fputs("Out of memory\n", stderr);
+			exit(EXIT_FAILURE);
+		}
+		new_node->data = x;
+		new_node->next = *head;
+		*head = new_node;
+	}
 
 //test cases
 // int main(int argc, char * argv[])
