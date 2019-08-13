@@ -18,7 +18,7 @@
 #include <stdio.h>
 
 struct Node {
-	int data;
+	void *data;
 	struct Node *next;
 } typedef Node;
 
