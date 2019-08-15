@@ -1,15 +1,13 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	stack_array.c
+* FILENAME: stack_array.c
 *
-* DESCRIPTION :
-* 	Implementation of stack api functions using arrays
+* DESCRIPTION: Implementation of stack api 
+*              functions using arrays
 *
-* AUTHOR:
-* 	WesternSage - 06 Augus 2019
+* AUTHOR: gfvante - 06 August 2019
 *
-***********************************************************************/
+*************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +27,7 @@ void stack_push(int x, Stack *head);
 
 Stack * stack_new()
 {
-	Stack *new_stack = (Stack*)malloc(sizeof(Stack));
+	Stack *new_stack = malloc(sizeof(Stack));
 	new_stack->top = STACK_BASE;
 	return new_stack;
 }

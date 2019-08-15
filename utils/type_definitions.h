@@ -1,16 +1,13 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	type_definitions.h
+* FILENAME: type_definitions.h
 *
-* DESCRIPTION :
-* 	Definition of data types used
-*   in data structure implementations
+* DESCRIPTION: Definition of data types used
+*              in data structure implementations
 *
-* AUTHOR:
-* 	WesternSage - 07 August 2019
+* AUTHOR: gfvante - 07 August 2019
 *
-***********************************************************************/
+**************************************************/
 
 #ifndef __DATA_TYPES__H__
 #define __DATA_TYPES__H__

@@ -1,22 +1,19 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	stack_list.h
+* FILENAME: stack_list.h
 *
-* DESCRIPTION :
-* 	Stack api functions prototypes
-*	  and required data structures (e.g. Node)
+* DESCRIPTION: Stack api functions prototypes
+*	           and required data structures (e.g. Node)
 *
-* AUTHOR:
-* 	WesternSage - 06 Augus 2019
+* AUTHOR: WesternSage - 06 August 2019
 *
-***********************************************************************/
+*************************************************/
 
 #ifndef __STACK_H__
 #define __STACK_H__
 
 #include <stdbool.h>
-#include "../../utils/type_definitions.h"
+#include "type_definitions.h"
 
 // TODO : Implement is_empty func
 

@@ -1,15 +1,13 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	linked_list.c
+* FILENAME: linked_list.c
 *
-* DESCRIPTION :
-* 	Implementation of Linked list api functions
+* DESCRIPTION: Implementation of Linked list api 
+*              functions
 *
-* AUTHOR:
-* 	WesternSage - 04 Augus 2019
+* AUTHOR: gfvante - 04 August 2019
 *
-***********************************************************************/
+**************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>

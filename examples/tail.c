@@ -19,6 +19,9 @@
 #include "../stack/stack_list/stack_list.h"
 #define LINE_SIZE 256
 
+//TODO: Use a ring buffer of size number_of_lines
+//TODO: Define ARRAY_SIZE(arr) macro
+
 int main(int argc, char *argv[])
 {
     if (argc < 2) {

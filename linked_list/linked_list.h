@@ -1,21 +1,19 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	linked_list.h
+* FILENAME:	linked_list.h
 *
-* DESCRIPTION :
-* 	Linked list api functions prototypes
-*	and required data structures (e.g. list Node)
+* DESCRIPTION : Linked list api functions 
+*               prototypes and required data 
+*               structures (e.g. list Node)
 *
-* AUTHOR:
-* 	WesternSage - 04 Agus 2019
+* AUTHOR: gfvanrte - 04 Agus 2019
 *
-***********************************************************************/
+**************************************************/
 
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-#include "../utils/type_definitions.h"
+#include "type_definitions.h"
 
 // TODO: Implement delete_list func
 // TODO: Implement get_node_by_pos func

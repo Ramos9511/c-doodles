@@ -1,16 +1,13 @@
-/***********************************************************************
+/**************************************************
 *
-* FILENAME:
-*	dlinked_list.c
+* FILENAME: dlinked_list.c
 *
-* DESCRIPTION :
-* 	Implementation of doubly Linked
-*	list api functions
+* DESCRIPTION : Implementation of doubly Linked
+*	            list api functions
 *
-* AUTHOR:
-* 	WesternSage - 04 Agus 2019
+* AUTHOR: gfvante - 04 August 2019
 *
-***********************************************************************/
+**************************************************/
 
 #include "dlinked_list.h"
 #include <stdio.h>
@@ -64,25 +61,3 @@ void dlist_rprint(Node *head)
 		temp = temp->prev;
 	}
 }
-
-// /* test cases */
-// int main(int argc, char * argv[])
-// {
-// 	Node *head = dlist_new();
-// 	dlist_insert(2, &head);
-// 	dlist_print(head);
-// 	printf("\n");
-// 	dlist_rprint(head);
-// 	printf("\n");
-// 	dlist_insert(4, &head);
-// 	dlist_print(head);
-// 	printf("\n");
-// 	dlist_rprint(head);
-// 	printf("\n");
-// 	dlist_insert(6, &head);
-// 	dlist_print(head);
-// 	printf("\n");
-// 	dlist_rprint(head);
-//
-// 	return 0;
-// }

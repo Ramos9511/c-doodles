@@ -1,16 +1,14 @@
-/***********************************************************************
+/*************************************************
 *
-* FILENAME:
-*	dlinked_list.h
+* FILENAME:	dlinked_list.h
 *
-* DESCRIPTION :
-* 	Doubly linked list api functions prototypes
-*	and required data structures (e.g. list Node)
+* DESCRIPTION : Doubly linked list api functions
+*                prototypes  and required data 
+*                structures (e.g. list Node)
 *
-* AUTHOR:
-* 	WesternSage - 05 August 2019
+* AUTHOR: gfvante - 05 August 2019
 *
-***********************************************************************/
+**************************************************/
 #ifndef __DLINKED_LIST_H__
 #define __DLINKED_LIST_H__
 
