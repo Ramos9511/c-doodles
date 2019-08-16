@@ -3,7 +3,7 @@
 *   FILENAME: queue_array.c
 *
 *   DESCRIPTION: Implementation of queue data 
-*                structure using static size 
+*                structure using static ring 
 *                buffers
 *
 *   Author: gfvante - 15 August 2019
