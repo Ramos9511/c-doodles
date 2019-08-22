@@ -1,5 +1,5 @@
 /**
-*	FILE: t1.c
+*	FILE: fix_record_fix_field.c
 *
 *	DESCRIPTION: given a binary file
 * 	organized as follows,
