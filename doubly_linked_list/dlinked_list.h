@@ -12,13 +12,17 @@
 #ifndef __DLINKED_LIST_H__
 #define __DLINKED_LIST_H__
 
-#include "../utils/type_definitions.h"
-
 // TODO: Implement append func
 // TODO: Implement delete_list func
 // TODO: Implement get_node_by_pos func
 // TODO: Implement get_node_by_value func
 // TODO: Implement remove_by_value func
+
+struct node {
+	void *data;
+	Node *next;
+	Node *prev;
+} typedef Node;
 
 Node *dlist_new();                      // create new list
 Node *dlist_new_node(int x);            // create new node

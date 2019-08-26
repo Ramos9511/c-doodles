@@ -48,6 +48,7 @@ void dlist_print(Node *head)
 	}
 }
 
+// reverse print
 void dlist_rprint(Node *head)
 {
 	Node *temp = head;

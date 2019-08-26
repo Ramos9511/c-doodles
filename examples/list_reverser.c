@@ -1,24 +1,23 @@
 /***********************************************************************
 *
-* FILENAME:
-*	<filename>
+* FILENAME: list_verser.c
 *
-* DESCRIPTION :
-* 	<short description>
+* DESCRIPTION: reverses the order
+* of elements of a given linked list
 *
-* AUTHOR:
-* 	WesternSage - <date>
+* AUTHOR: gfvante - 12 August 2019	
 *
 ***********************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../utils/type_definitions.h"
-#include "../linked_list/linked_list.h"
-#include "../stack/stack_list/stack_list.h"
+#include "type_definitions.h"
+#include "linked_list.h"
+#include "stack_list.h"
 
 Node *list_stack_reverse(Node *head);
 
+// test cases
 int main(int argc, char * argv[])
 {
 	Node *new_list = list_new();
@@ -39,12 +38,13 @@ Node *list_stack_reverse(Node *head)
 	Node *temp = head;
 	Node *stack = stack_new();
 	Node *rlist = list_new();
+	// push list nodes to stack
 	while (temp != NULL) {
 		stack_push(temp->data, &stack);
 		temp = temp->next;
 	}
-
-	while (!stack_is_empty(stack)) {
+	// pop list nodes in reverse order
+	while (!stack_is_empty(stack)) 
 		list_append(stack_top(stack), &rlist);
 		stack_pop(&stack);
 	}

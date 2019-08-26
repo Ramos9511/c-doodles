@@ -1,13 +1,12 @@
 /***********************************************************************
 *
-* FILENAME:
-*	<filename>
+* FILENAME: parentheses_checker.c
 *
-* DESCRIPTION :
-* 	<short description>
+* DESCRIPTION: Checks if a given expression
+* has balanced block characters (e.g. '(', ')'
+* '{','}', '[',']')
 *
-* AUTHOR:
-* 	WesternSage - <date>
+* AUTHOR: gfvante - 15 August 2019
 *
 ***********************************************************************/
 
@@ -19,6 +18,7 @@
 
 bool check_balance(char *str);
 
+// test case
 int main(int argc, char * argv[])
 {
 	char *str = "{[(a)]]}";

@@ -1,21 +1,18 @@
 /***********************************************************************
 *
-* FILENAME:
-*	string_reverser.c
+* FILENAME: string_reverser.c
 *
-* DESCRIPTION :
-* 	Reverse a given string using stack
+* DESCRIPTION: Reverse a given string using stack
 *
-* AUTHOR:
-* 	WesternSage - 07 August 2019
+* AUTHOR: gfvante - 07 August 2019
 *
 ***********************************************************************/
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../utils/type_definitions.h"
-#include "../stack/stack_list/stack_list.h"
+#include "type_definitions.h"
+#include "stack_list.h"
 
 char *string_reverse(char *text);
 
@@ -33,8 +30,10 @@ char *string_reverse(char *text)
 	printf("%d\n",length );
 	Node *stack = stack_new();
 	char *rstring = malloc(length + 1);
+	// push characters to stack
 	for (int i = 0; i < length; i++)
 		stack_push(text[i], &stack);
+	// pop characters, reversing string
 	for (int i = 0; i < length; i++) {
 		rstring[i] = stack_top(stack);
 		printf("%s\n", rstring);

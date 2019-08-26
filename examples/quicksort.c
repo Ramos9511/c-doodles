@@ -1,4 +1,13 @@
-/* Sort a given set of integer values using Quicksort algorithm */
+/***********************************************************************
+*
+* FILENAME: parentheses_checker.c
+*
+* DESCRIPTION: Sort a given set of integer 
+* values using Quicksort algorithm 
+*
+* AUTHOR: gfvante - 15 August 2019
+*
+***********************************************************************/
 
 #include <stdio.h>
 #define N 10

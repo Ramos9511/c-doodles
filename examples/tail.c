@@ -1,22 +1,19 @@
 /***********************************************************************
 *
-* FILENAME:
-*	  tail.c
+* FILENAME: tail.c
 *
-* DESCRIPTION :
-* 	implementation of unix tail command
-*   using stack data structure
+* DESCRIPTION: implementation of unix 
+* tail command using stack data structure
 *
-* AUTHOR:
-* 	WesternSage - <date>
+* AUTHOR: gfvante - 12 August 2019 
 *
 ***********************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../utils/type_definitions.h"
-#include "../stack/stack_list/stack_list.h"
+#include "type_definitions.h"
+#include "stack_list.h"
 #define LINE_SIZE 256
 
 //TODO: Use a ring buffer of size number_of_lines
@@ -24,6 +21,8 @@
 
 int main(int argc, char *argv[])
 {
+	/* getting args and checking for errs */
+
     if (argc < 2) {
         fprintf(stderr, "usage: %s LINES\n", argv[0]);
         return EXIT_FAILURE;
