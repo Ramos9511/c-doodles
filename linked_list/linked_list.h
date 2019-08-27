@@ -13,7 +13,10 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-#include "type_definitions.h"
+struct Node {
+	void *data;
+	struct Node *next;
+} typedef Node;
 
 // TODO: Implement delete_list func
 // TODO: Implement get_node_by_pos func

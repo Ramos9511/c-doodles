@@ -1,18 +1,24 @@
-/************************************************
+/**
+*	FILE: queue_list.c 
 *
-*   FILENAME: queue_list.c
+*	DESCRIPTION: Implementation of queue data 
+*   structure and handling functions using 
+*   linked list 
 *
-*   DESCRIPTION: Implementation of queue data 
-*                structure using linked list 
+*	AUTHOR: gfvante - 20 August 2019
 *
-*   Author: gfvante - 15 August 2019
+*   NOTE ======================================== 
+*   Error handling has not been implemented 
+*   for clarity purposes. If you plan on using 
+*   this code as part of a real application you 
+*   you should treat the possible error scenarios! 
+*   ==============================================
 *
-*************************************************/
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "type_definitions.h"
-#include "linked_list.h"
+#include "queue_list.h"
 
 Queue *new()
 {

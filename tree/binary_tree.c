@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "queue_list.h"
 
 // binary_tree.h 
 // ===============================
@@ -25,22 +26,22 @@ struct node {
 	int data;
 	struct node *left;
 	struct node *right;
-} typedef Node;
+} typedef TNode;
 
-Node *new();
-int min(Node *root);
-int max(Node *root);
-int height(Node *root);
-Node *new_node(int data);
-int search(Node *root, int data);
-void insert(Node **root, int data);
+TNode *new_tree();
+int min(TNode *root);
+int max(TNode *root);
+int height(TNode *root);
+TNode *new_node(int data);
+int search(TNode *root, int data);
+void insert(TNode **root, int data);
 
 //===============================
 
 int main(int argc, char *argv[])
 {
 	// test cases
-	Node *root = new();
+	TNode *root = new_tree();
 	insert(&root, 10);
 	insert(&root, 5);
 	insert(&root, 20);
@@ -49,21 +50,22 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "tree height: %d\n", height(root));
 }
 
-Node *new()
+TNode *new_tree()
 {
 	return NULL;
 }
 
-Node *new_node(int data)
+TNode *new_node(int data)
 {
-	Node *new_node = malloc(sizeof(Node));
+	TNode *new_node = malloc(sizeof(TNode));
 	new_node->data = data;
 	new_node->left = NULL;
 	new_node->right = NULL;
 	return new_node;
 }
 
-void insert(Node **root, int data)
+// recursive insertion
+void insert(TNode **root, int data)
 {
 	if (!(*root))
 		*root = new_node(data);
@@ -73,15 +75,16 @@ void insert(Node **root, int data)
 		insert(&(*root)->right, data);	
 }
 
-int search(Node *root, int data) 
+// recursive search
+int search(TNode *root, int data) 
 {
-	if (!root) return 0;
+	if (!root) return 0;	// not found
 	else if (root->data == data) return 1;
 	else if (data <= root->data) search(root->left, data);
 	else search(root->right, data);
 }
 
-int min(Node *root)
+int min(TNode *root)
 {
 	if (!root) exit(3); // error 
 	if (!root->left)
@@ -89,7 +92,7 @@ int min(Node *root)
 	min(root->left);
 }
 
-int max(Node *root)
+int max(TNode *root)
 {
 	if (!root) exit(3); // error 
 	if (!root->right)
@@ -97,7 +100,7 @@ int max(Node *root)
 	min(root->right);
 }
 
-int height(Node *root)
+int height(TNode *root)
 {
 	if (!root) // empty tree
 		return -1;
@@ -107,5 +110,6 @@ int height(Node *root)
 		return left_height + 1;
 	else
 		return right_height + 1;
-
 }
+
+
