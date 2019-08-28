@@ -35,6 +35,9 @@ int height(TNode *root);
 TNode *new_node(int data);
 int search(TNode *root, int data);
 void insert(TNode **root, int data);
+void in_order_traversal(TNode *root);
+void pre_order_traversal(TNode *root);
+void post_order_traversal(TNode *root);
 void level_order_traversal(TNode *root);
 
 //===============================
@@ -53,9 +56,17 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "min: %d\n", min(root));
 	fprintf(stdout, "max: %d\n", max(root));
 	fprintf(stdout, "tree height: %d\n", height(root));
+	fputs("Lever order traversal: ", stdout);
 	level_order_traversal(root);
+	fputs("\nPreorder traversal: ", stdout);
+	pre_order_traversal(root);
+	fputs("\nInorder traversal: ", stdout);
+	in_order_traversal(root);
+	fputs("\nPostorder traversal: ", stdout);
+	post_order_traversal(root);
 }
 
+// new empty tree
 TNode *new_tree()
 {
 	return NULL;
@@ -106,6 +117,9 @@ int max(TNode *root)
 	max(root->right);
 }
 
+/* returns the height of a tree
+   considering root node as having
+   height 0 */
 int height(TNode *root)
 {
 	if (!root) // empty tree
@@ -133,4 +147,30 @@ void level_order_traversal(TNode *root)
 		if (current->right) enqueue(current->right, q);
 		dequeue(q); // removing visited element
 	}
+}
+
+/* dept-first traversal */
+
+void pre_order_traversal(TNode *root)
+{
+	if (!root) return;	// stop condition
+	fprintf(stdout, "%d ", root->data);
+	pre_order_traversal(root->left);
+	pre_order_traversal(root->right);
+}
+
+void in_order_traversal(TNode *root)
+{
+	if (!root) return;	// stop condition
+	in_order_traversal(root->left);
+	fprintf(stdout, "%d ", root->data);
+	in_order_traversal(root->right);
+}
+
+void post_order_traversal(TNode *root)
+{
+	if (!root) return;	// stop condition
+	post_order_traversal(root->left);
+	post_order_traversal(root->right);
+	fprintf(stdout, "%d ", root->data);
 }
