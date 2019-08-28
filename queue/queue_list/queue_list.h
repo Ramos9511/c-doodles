@@ -20,7 +20,7 @@
 #define __QUEUE_H__
 
 struct Node {
-	int data;
+	void * data;
 	struct Node *next;
 } typedef Node;
 
@@ -32,8 +32,9 @@ struct queue {
 // TODO: implement is_empty func
 
 Queue *new();
-void peek(Queue *q);
+void *peek(Queue *q);
 void dequeue(Queue *q);
-void enqueue(int x, Queue *q);
+int is_empty(Queue *q);
+void enqueue(void *x, Queue *q);
 
 #endif

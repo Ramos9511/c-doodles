@@ -2,7 +2,7 @@
 *	FILE: queue_list.c 
 *
 *	DESCRIPTION: Implementation of queue data 
-*   structure and handling functions using 
+*   structure and api functions using 
 *   linked list 
 *
 *	AUTHOR: gfvante - 20 August 2019
@@ -23,16 +23,12 @@
 Queue *new()
 {
 	Queue *q = malloc(sizeof(Queue));
-	if (!q) {
-		fputs("Out of memory!\n", stderr);
-		exit(EXIT_FAILURE);
-	}
 	q->head = NULL;
 	q->tail = NULL;
 	return q;
 }
 
-void enqueue(int x, Queue *q)
+void enqueue(void *x, Queue *q)
 {
 	Node *n = malloc(sizeof(Node));
 	// should check malloc return here...
@@ -57,9 +53,15 @@ void dequeue(Queue *q)
 	}
 	free(head);
 }
-	
-void peek(Queue *q) 
+
+int is_empty(Queue *q) 
 {
-	// should check if queue is empty here...
-	fprintf(stdout, "Queue head: %d\n", q->head->data);
+	if (!q->head && !q->tail)
+		return 1;
+	return 0;
+}
+	
+void *peek(Queue *q) 
+{
+	return q->head->data;
 }

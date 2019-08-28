@@ -35,6 +35,7 @@ int height(TNode *root);
 TNode *new_node(int data);
 int search(TNode *root, int data);
 void insert(TNode **root, int data);
+void level_order_traversal(TNode *root);
 
 //===============================
 
@@ -42,12 +43,17 @@ int main(int argc, char *argv[])
 {
 	// test cases
 	TNode *root = new_tree();
-	insert(&root, 10);
 	insert(&root, 5);
-	insert(&root, 20);
+	insert(&root, 3);
+	insert(&root, 7);
+	insert(&root, 2);
+	insert(&root, 4);
+	insert(&root, 10);
+	insert(&root, 6);
 	fprintf(stdout, "min: %d\n", min(root));
 	fprintf(stdout, "max: %d\n", max(root));
 	fprintf(stdout, "tree height: %d\n", height(root));
+	level_order_traversal(root);
 }
 
 TNode *new_tree()
@@ -97,7 +103,7 @@ int max(TNode *root)
 	if (!root) exit(3); // error 
 	if (!root->right)
 		return root->data;
-	min(root->right);
+	max(root->right);
 }
 
 int height(TNode *root)
@@ -112,4 +118,19 @@ int height(TNode *root)
 		return right_height + 1;
 }
 
-
+// breadth-first traversal
+void level_order_traversal(TNode *root) 
+{
+	if (!root) return;	// special case, empty tree
+	Queue *q = new();
+	enqueue(root, q);
+	// where there's at least one node
+	while (!is_empty(q)) {
+		TNode *current = peek(q);
+		fprintf(stdout, "%d ", current->data);
+		// queuing children of current
+		if (current->left) enqueue(current->left, q);
+		if (current->right) enqueue(current->right, q);
+		dequeue(q); // removing visited element
+	}
+}
