@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "queue_list.h"
 
 // binary_tree.h 
@@ -32,6 +33,7 @@ TNode *new_tree();
 int min(TNode *root);
 int max(TNode *root);
 int height(TNode *root);
+int is_bst(TNode *root);
 TNode *new_node(int data);
 int search(TNode *root, int data);
 void insert(TNode **root, int data);
@@ -39,6 +41,7 @@ void in_order_traversal(TNode *root);
 void pre_order_traversal(TNode *root);
 void post_order_traversal(TNode *root);
 void level_order_traversal(TNode *root);
+int is_bst_util(TNode *root, int min, int max);
 
 //===============================
 
@@ -53,6 +56,8 @@ int main(int argc, char *argv[])
 	insert(&root, 4);
 	insert(&root, 10);
 	insert(&root, 6);
+	insert(&root, 20);
+	insert(&root, 0);
 	fprintf(stdout, "min: %d\n", min(root));
 	fprintf(stdout, "max: %d\n", max(root));
 	fprintf(stdout, "tree height: %d\n", height(root));
@@ -64,6 +69,7 @@ int main(int argc, char *argv[])
 	in_order_traversal(root);
 	fputs("\nPostorder traversal: ", stdout);
 	post_order_traversal(root);
+	if (is_bst(root)) fputs("\nTree is a BST!: ", stdout);
 }
 
 // new empty tree
@@ -132,6 +138,26 @@ int height(TNode *root)
 		return right_height + 1;
 }
 
+// utility bst recursive check with range limit
+int is_bst_util(TNode *root, int min, int max)
+{
+	// base case
+	if (!root) return 1;
+	// recursion chain
+	if (root->data > min && root->data < max
+			&& is_bst_util(root->left, min, root->data)
+			&& is_bst_util(root->right, root->data, max))
+		return 1;
+	else
+		return 0;
+}
+
+// checks if given tree is bst
+int is_bst(TNode *root)
+{
+	return is_bst_util(root, INT_MIN, INT_MAX);
+}
+
 // breadth-first traversal
 void level_order_traversal(TNode *root) 
 {
@@ -174,3 +200,5 @@ void post_order_traversal(TNode *root)
 	post_order_traversal(root->right);
 	fprintf(stdout, "%d ", root->data);
 }
+
+
