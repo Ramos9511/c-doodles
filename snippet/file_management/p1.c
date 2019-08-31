@@ -45,10 +45,19 @@ int main(int argc, char *argv[])
 	// opening file streams 
 	FILE *f = fopen("input_file.bin", "w+b");
 
-	// possibly process file once, storin offsets to
-	// each record in a list (where the nodes have an
-	// offset field and flag indicating if record in
-	// question is marked or not...
+	/* process file once, storing offsets to
+	   each record in a list (where the nodes have an
+	   offset field, lag indicating if record in
+	   question is marked or not and RRN:
+	   
+	   struct record {
+	   	int rrn;
+		int offset;
+		char state;
+		struct record *next;
+	   }
+	   
+	   */
 
 
 
