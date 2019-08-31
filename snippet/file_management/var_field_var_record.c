@@ -92,7 +92,6 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "\n\n%s %s %s %s\n", records[n].fname, records[n].sname, 
 		records[n].address, records[n].number); 
 
-
 	// TMP SECTION =======================
 
 	FILE *ftest = fopen("campo_var_reg_var.dad", "r+t");
@@ -101,5 +100,4 @@ int main(int argc, char *argv[])
 		fprintf(stdout, "%c ", c);
 	free(buffer);
 }
-
 
