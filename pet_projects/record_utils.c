@@ -19,41 +19,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "record_utils.h"
-
-void help()
-{
-	fputs(
-			"Name: \n
-			\t	fdb - file database manager \n
-			Synopsis:
-			\t	fdb ACTION [RRN] \n
-			Description
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-void header_init(FILE *fdb)
-{
-	/* Description: Set up avail 
-	   list frame on empty record 
-	   file */
-
-	fseek(fdb, 0, SEEK_SET);
-	int offset = -1;
-	fwrite(&offset, sizeof(offset), 1, fdb);
-	fseek(fdb, 0, SEEK_SET);
-}
-
+ 
 void remove_rrn(FILE *frn)
 {
 	/* Description: remove rrn entry
@@ -240,17 +206,12 @@ void remove_record(FILE *fdb, int rrn_offset)
 
 	int offset;
 	fread(&offset, sizeof(offset), 1, fdb);
-	
-	printf("offset value at time reading: %d\n", offset);
 
 	// insert new position at beginning of list
 	fseek(fdb, -sizeof(offset), SEEK_CUR);
 	fwrite(&rrn_offset, sizeof(rrn_offset), 1, fdb);
 
 	// link new avail pos to list tail
-
-	printf("offset value at time of writting: %d\n", offset);
-
 	fseek(fdb, rrn_offset + 4, SEEK_SET);
 	fputc('*', fdb);
 	fwrite(&offset, sizeof(offset), 1, fdb);
@@ -259,7 +220,48 @@ void remove_record(FILE *fdb, int rrn_offset)
 
 
 
+/* UTILS
+===========================================================*/
+void help()
+{
+		fputs(
+			"\nName: \n\
+\tfdb - file database manager \n\
+Synopsis: \n\
+\tfdb ACTION [RRN] \n\
+Description: \n\
+\tsimple file handler toll for concept ilustration, offers insertion, removal, compression, hexdumping and loading roperations \n\
+Mandatory arguments (actions): \n\
+\t-i [RRN] \n\
+\t\tinsertion, record RRN or all(in file) if RRN not given \n\
+\t-r [RRN] \n\
+\t\tremoval, record RRN or all(in file) if RRN not given \n\
+\t-c \n\
+\t\tcompression \n\
+\t-d \n\
+\t\thexdump", stdout);
 
+}
+
+char *get_rrn(int argc, char **argv)
+{
+	if (argc == 3) 
+		return argv[2];
+	else 
+		return NULL;
+}
+
+void header_init(FILE *fdb)
+{
+	/* Description: Set up avail 
+	   list frame on empty record 
+	   file */
+
+	fseek(fdb, 0, SEEK_SET);
+	int offset = -1;
+	fwrite(&offset, sizeof(offset), 1, fdb);
+	fseek(fdb, 0, SEEK_SET);
+}
 
 
 

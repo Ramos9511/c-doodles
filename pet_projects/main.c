@@ -31,47 +31,22 @@
 
 int main(int argc, char *argv[])
 {
-	// wrong usage check
-	if (argc < 2 || argc > 4) {
-		fprintf(stderr, "Usage: %s <action> [args]\n", argv[0]);
-		exit(1);
-	}
-
-	// database stream (file must exist)
 	FILE *fdb;
 	if (!(fdb = fopen("records.bin", "r+b"))) {
-		
-		// file doesn't exist, creat it	
 		fdb = fopen("records.bin", "w+b");
-		
-		// creat avail list frame
-		header_init(fdb);
+		header_init(fdb); // set up avail list frame;
 	}
-	
 
-	// action switch
-	switch (*argv[1]) {
+	char *arg = argv[1];
+	switch (arg[1]) {
 		case 'i':
 		{	
-			// insertion file	
 			FILE *fin = fopen("insere.bin", "rb");
-	
-			// rrn control file	
-			FILE *frn = fopen("rrn_list.bin", "a+b");
-			
-			// main data buffer
+			FILE *frn = fopen("rrn_list.bin", "a+b"); // control file
 			char *buffer = malloc(RECORD_SIZE); 
-
-			// rrn of desired record
-			char *rrn;
-			if (argc == 3) 
-				rrn = argv[2];
-			else 
-				rrn = NULL;
+			char *rrn = get_rrn(argc, argv); // get rrn from command line
 		
-			// if a rrn was given
 			if (rrn) {
-				
 				// duplicated rrn?
 				if (check_rrn(frn, rrn)) {
 					fprintf(stderr, "rrn %s not available!\n", rrn);
@@ -92,21 +67,20 @@ int main(int argc, char *argv[])
 				fwrite(&curr_offset, sizeof(int), 1, frn);
 	
 			} else {
-		
+					
 				// rrn not given, insert all records 
 				while (read_record(fin, buffer)) {
-				
+
+					char rrn_tmp[3]; memcpy(rrn_tmp, buffer + 4, 3); 	
+
 					// duplicated rrn?
-					char rrn_tmp[3];
-					memcpy(rrn_tmp, buffer + 4, 3); 	
 					if (check_rrn(frn, rrn_tmp)) {
 						fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
-					// insert and update rrn control file	
 					} else {
 						insert_record(buffer, fdb);
 						// write record rrn to control file
 						fwrite(buffer + 4, 3, 1, frn);
-						// get offset returned from isertion and write to control file
+						// get offset returned and write to control file
 						int curr_offset = ftell(fdb);
 						fwrite(&curr_offset, sizeof(curr_offset), 1, frn);
 						fseek(frn, 0, SEEK_SET);
@@ -114,70 +88,51 @@ int main(int argc, char *argv[])
 				}
 			}
 	
-			// close scope file streams
 			fclose(fin);
 			fclose(frn);
+			free(buffer);
 			break;
 		}
 
 		case 'r':
 		{
-			// rrn control file	
-			FILE *frn;
-			if (!(frn = fopen("rrn_list.bin", "r+b")))
-					exit(1); //error, nothing to remove
-			
-			// rrn of desired record
-			char *rrn;
-			if (argc == 3) 
-				rrn = argv[2];
-			else 
-				rrn = NULL;
-		
+			FILE *frn = fopen("rrn_list.bin", "r+b");
+			char *rrn = get_rrn(argc, argv); // get rrn from command line
+					
 			int offset;
-
-			// if a rrn was given
 			if (rrn) {
-				
-				// check if rrn exists 
+				// does it exist? 
 				if (check_rrn(frn, rrn)) {
 					fread(&offset, 4, 1, frn);
-					// remove record
 					remove_record(fdb, offset);
-					// update control file
-					remove_rrn(frn);
-
-				} else { exit(1); } 
+					remove_rrn(frn); // update control file
+				} else { 
+					fprintf(stderr, "rrn %s was not found!\n", rrn);
+					exit(1); 
+				} 
 				
 			} else {
-				
-				// open remove file
-				FILE *frm;
-				if (!(frm = fopen("remove.bin", "rb")))
-					exit(1);
+					
+				FILE *frm = fopen("remove.bin", "rb");
 
-				// remove all rrn listed on file
 				char frrn[3];
+				// remove all rrn listed on file
 				while (fread(&frrn, 3, 1, frm)) {
 					// if rrn exists proceed with removal
 					if (check_rrn(frn, frrn)) {
 						fread(&offset, 4, 1, frn);
-						// remove record
 						remove_record(fdb, offset);
-						// update control file
-						remove_rrn(frn);
+						remove_rrn(frn); // update control file
 					} else { 
 						fprintf(stderr, "rrn %s was not found!\n", frrn);
 					}
 				
-					// skip 00 padding
-					fseek(frm, 1, SEEK_CUR);
-					// reset control file pointer
-					fseek(frn, 0, SEEK_SET);
+					fseek(frm, 1, SEEK_CUR); //skip padding
+					fseek(frn, 0, SEEK_SET); // reset control file pointer
 				}
+
 				fclose(frm);	
 			}
-
 
 			fclose(frn);	
 			break;
@@ -195,15 +150,18 @@ int main(int argc, char *argv[])
 			break;
 		}
 
+		case 'h':
+		{
+			help();
+			break;
+		}
+
 		default:
 			fprintf(stderr, "Unknown action: %s\n", argv[1]);
 			exit(1);
 	}
-
-	/* closing input stream,
-	we won't use it anymore */
+	
 	fclose(fdb);
-
 }
 
 

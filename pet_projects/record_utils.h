@@ -39,10 +39,12 @@ struct input_record {
 } typedef IRecord;
 
 // prototypes
-void remove_rrn(FILE *frn);						// remove rrn entry from control file
-void header_init(FILE *fdb);					// create avail list frame
+void help();															// displays help menu
+void remove_rrn(FILE *frn);						    // remove rrn entry from control file
+void header_init(FILE *fdb);				     	// create avail list frame
 int check_rrn(FILE *frn, char *rrn);			// check if given rrn is a duplicate 
-int search_rrn(FILE *fin, char *rrn);           // given rrn, return offset to its record
-void remove_record(FILE *fdb, int rrn);			// remove record of given rrn
-int read_record(FILE *fin, char *record);     	// read single record from insertion file
+int search_rrn(FILE *fin, char *rrn);     // given rrn, return offset to its record
+char *get_rrn(int argc, char **argv);     // get passed rrn form command line
+void remove_record(FILE *fdb, int rrn);		// remove record of given rrn
+int read_record(FILE *fin, char *record); // read single record from insertion file
 void insert_record(char *record, FILE *fdb);	// insert record at next avail pos
