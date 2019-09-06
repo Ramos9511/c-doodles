@@ -39,6 +39,7 @@ struct input_record {
 } typedef IRecord;
 
 // prototypes
+void remove_rrn(FILE *frn);						// remove rrn entry from control file
 void header_init(FILE *fdb);					// create avail list frame
 int check_rrn(FILE *frn, char *rrn);			// check if given rrn is a duplicate 
 int search_rrn(FILE *fin, char *rrn);           // given rrn, return offset to its record

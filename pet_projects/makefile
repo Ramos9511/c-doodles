@@ -7,7 +7,7 @@ record_manager: main.o record_utils.o
 clean:
 	$(RM) *.o
 
-mostlyclean: clean
-	$(RM) *~
+allclean: clean
+	$(RM) *~ records.bin rrn_list.bin 
 
 

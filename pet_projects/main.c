@@ -60,11 +60,15 @@ int main(int argc, char *argv[])
 
 	// database stream (file must exist)
 	FILE *fdb;
-	if (!(fdb = fopen("records.bin", "r+b")))
+	if (!(fdb = fopen("records.bin", "r+b"))) {
+		
+		// file doesn't exist, creat it	
 		fdb = fopen("records.bin", "w+b");
+		
+		// creat avail list frame
+		header_init(fdb);
+	}
 	
-	// creat avail list frame
-	header_init(fdb);
 
 	// action switch
 	switch (*argv[1]) {
@@ -74,7 +78,7 @@ int main(int argc, char *argv[])
 			FILE *fin = fopen("insere.bin", "rb");
 	
 			// rrn control file	
-			FILE *frn = fopen("rrn_list.txt", "a+");
+			FILE *frn = fopen("rrn_list.bin", "a+b");
 			
 			// main data buffer
 			char *buffer = malloc(RECORD_SIZE); 
@@ -104,7 +108,9 @@ int main(int argc, char *argv[])
 				insert_record(buffer, fdb);
 
 				// update rrn control file
-				fprintf(frn, "%s\n", rrn);
+				int curr_offset = ftell(fdb);
+				fwrite(rrn, 3, 1, frn);
+				fwrite(&curr_offset, sizeof(int), 1, frn);
 	
 			} else {
 		
@@ -116,22 +122,85 @@ int main(int argc, char *argv[])
 					memcpy(rrn_tmp, buffer + 4, 3); 	
 					if (check_rrn(frn, rrn_tmp)) {
 						fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
+					// insert and update rrn control file	
 					} else {
-						// insert and update rrn control file	
 						insert_record(buffer, fdb);
+						// write record rrn to control file
 						fwrite(buffer + 4, 3, 1, frn);
-						fprintf(frn, "\n");
+						// get offset returned from isertion and write to control file
+						int curr_offset = ftell(fdb);
+						fwrite(&curr_offset, sizeof(curr_offset), 1, frn);
 						fseek(frn, 0, SEEK_SET);
 					}
 				}
 			}
-
+	
+			// close scope file streams
 			fclose(fin);
+			fclose(frn);
 			break;
 		}
 
 		case 'r':
-		{	// remove stuff
+		{
+			// rrn control file	
+			FILE *frn;
+			if (!(frn = fopen("rrn_list.bin", "r+b")))
+					exit(1); //error, nothing to remove
+			
+			// rrn of desired record
+			char *rrn;
+			if (argc == 3) 
+				rrn = argv[2];
+			else 
+				rrn = NULL;
+		
+			int offset;
+
+			// if a rrn was given
+			if (rrn) {
+				
+				// check if rrn exists 
+				if (check_rrn(frn, rrn)) {
+					fread(&offset, 4, 1, frn);
+					// remove record
+					remove_record(fdb, offset);
+					// update control file
+					remove_rrn(frn);
+
+				} else { exit(1); } 
+				
+			} else {
+				
+				// open remove file
+				FILE *frm;
+				if (!(frm = fopen("remove.bin", "rb")))
+					exit(1);
+
+				// remove all rrn listed on file
+				char frrn[3];
+				while (fread(&frrn, 3, 1, frm)) {
+					// if rrn exists proceed with removal
+					if (check_rrn(frn, frrn)) {
+						fread(&offset, 4, 1, frn);
+						// remove record
+						remove_record(fdb, offset);
+						// update control file
+						remove_rrn(frn);
+					} else { 
+						fprintf(stderr, "rrn %s was not found!\n", frrn);
+					}
+				
+					// skip 00 padding
+					fseek(frm, 1, SEEK_CUR);
+					// reset control file pointer
+					fseek(frn, 0, SEEK_SET);
+				}
+				fclose(frm);	
+			}
+
+
+			fclose(frn);	
 			break;
 		}
 		

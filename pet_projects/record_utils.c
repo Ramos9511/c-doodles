@@ -32,26 +32,35 @@ void header_init(FILE *fdb)
 	fseek(fdb, 0, SEEK_SET);
 }
 
+void remove_rrn(FILE *frn)
+{
+	/* Description: remove rrn entry
+	   from rrn control file */
+
+	// move pointer to beginning of entry
+	fseek(frn, -7, SEEK_CUR); 
+
+	// remove rrn entry
+	char blank[7] = {'\0'};			// 8 is size of rrn entry in control file
+	fwrite(blank, sizeof(blank), 1, frn); 
+}
+
 int check_rrn(FILE *frn, char *rrn)
 {
 	/* Description: Search for 
 	   given rrn number in rrn
 	   control file */
 
-	char tmp[4];
-	while (fgets(tmp, sizeof(tmp), frn)) {
-	
-		// return if duplicate
-		if (!strcmp(tmp, rrn)) {
-			fseek(frn, 0, SEEK_SET);
-			return 1; 
-		}
+	char tmp[3];
+	while (fread(tmp, 3, 1, frn)) {
 
-		fseek(frn, 1, SEEK_CUR);
+		// return if duplicate
+		if (memcmp(tmp, rrn, 3) == 0)
+			return 1; 
+		
+		fseek(frn, 4, SEEK_CUR);
 	}
 
-	// not duplicate 
-	fseek(frn, 0, SEEK_SET);
 	return 0;
 }
 
@@ -147,8 +156,6 @@ void insert_record(char *record, FILE *fdb)
 	// get record size <-- read int from buffer (4 bytes)
 	int rsize = *((int*)record);
 
-	printf("rsize is: %d\n", rsize);
-
 	// get first avail pos
 	int offset, offset_prev = 0;
 	fread(&offset, sizeof(offset), 1, fdb);
@@ -161,8 +168,8 @@ void insert_record(char *record, FILE *fdb)
 		int psize;
 		fread(&psize, sizeof(psize), 1, fdb);
 
-		if (psize > rsize) {
-			// get next offset
+		if (psize >= rsize) {
+			// get next avail pos offset
 			int offset_next;
 			fseek(fdb, 1, SEEK_CUR);
 			fread(&offset_next, sizeof(offset_next), 1, fdb);
@@ -181,7 +188,7 @@ void insert_record(char *record, FILE *fdb)
 
 			// insert record
 			fseek(fdb, offset, SEEK_SET);
-			fseek(fdb, 4, SEEK_CUR);
+			//fseek(fdb, 4, SEEK_CUR);
 			fwrite(record, rsize, 1, fdb);
 			fseek(fdb, offset, SEEK_SET);
 			return;
@@ -197,16 +204,46 @@ void insert_record(char *record, FILE *fdb)
 	// no avail pos, just insert at eof 
 	fseek(fdb, 0, SEEK_END);
 	fwrite(record, rsize, 1, fdb);
-	fseek(fdb, offset, SEEK_SET);
+	fseek(fdb, -rsize, SEEK_CUR);
 }
 
-void remove_record(FILE *fdb, int rrn)
+void remove_record(FILE *fdb, int rrn_offset)
 {
+	/* Description: Given a record offset,
+	   mark it as removed and update avail 
+	   list with new available space */ 
 
+	// get first avail pos from header
+	fseek(fdb, 0, SEEK_SET);
 
+	char tmp;
+	fread(&tmp, 1, 1, fdb);
+	printf("Header: %x ", tmp);
+	fread(&tmp, 1, 1, fdb);
+	printf("%x ", tmp);
+	fread(&tmp, 1, 1, fdb);
+	printf("%x ", tmp);
+	fread(&tmp, 1, 1, fdb);
+	printf("%x \n\n", tmp);
 
+	fseek(fdb, -4, SEEK_CUR);
 
+	int offset;
+	fread(&offset, sizeof(offset), 1, fdb);
+	
+	printf("offset value at time reading: %d\n", offset);
 
+	// insert new position at beginning of list
+	fseek(fdb, -sizeof(offset), SEEK_CUR);
+	fwrite(&rrn_offset, sizeof(rrn_offset), 1, fdb);
+
+	// link new avail pos to list tail
+
+	printf("offset value at time of writting: %d\n", offset);
+
+	fseek(fdb, rrn_offset + 4, SEEK_SET);
+	fputc('*', fdb);
+	fwrite(&offset, sizeof(offset), 1, fdb);
 }
 
 
