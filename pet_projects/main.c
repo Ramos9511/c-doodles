@@ -1,26 +1,17 @@
 /**
 *	FILE: p1.c 
 *
-*	DESCRIPTION: Given a binary file
-* 	organized as follows,
+*	DESCRIPTION: Given a binary file with 
+*	variable record and field sizes, using 
+*   '#' as field delimiter. We wish to process 
+*	such file, offering insertion, removal, 
+*	hexdumping and compression 
 *
 *	A view of data disposition in a given binary file:	
-*   ====================================================
-*   ...< Field # Field # Field # Field ><Next record>...
-*   ====================================================
-*
-*	with variable record and field 
-*	sizes, using '#' as field delimiter. 
-*	We wish to process such file, offering 
-*	insertion, removal, hexdumping and compression 
-*	functionality under the following restraints:  
-*
-*	- Intensive data manipulations  must be done in 
-*     secondary memory, in other words, directily on 
-*     file stream.
-*
-*   - Use as little temporary files as possible  
-*
+*   =======================================================
+*   ...< Field # Field # Field # Field # ><Next record>...
+*   =======================================================
+
 *	AUTHOR: gfvante - 30 August 2019
 *
 *   NOTE ======================================== 
@@ -40,18 +31,6 @@
 
 int main(int argc, char *argv[])
 {
-	/* TODO: command line args handling...
-		
-	   - actions:
-	   		1 - insertion
-			2 - remove
-			3 - compress
-			4 - dump
-			5 - load
-			
-		- help summary
-	*/
-
 	// wrong usage check
 	if (argc < 2 || argc > 4) {
 		fprintf(stderr, "Usage: %s <action> [args]\n", argv[0]);

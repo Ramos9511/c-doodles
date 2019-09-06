@@ -20,6 +20,28 @@
 #include <string.h>
 #include "record_utils.h"
 
+void help()
+{
+	fputs(
+			"Name: \n
+			\t	fdb - file database manager \n
+			Synopsis:
+			\t	fdb ACTION [RRN] \n
+			Description
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
 void header_init(FILE *fdb)
 {
 	/* Description: Set up avail 
@@ -215,18 +237,6 @@ void remove_record(FILE *fdb, int rrn_offset)
 
 	// get first avail pos from header
 	fseek(fdb, 0, SEEK_SET);
-
-	char tmp;
-	fread(&tmp, 1, 1, fdb);
-	printf("Header: %x ", tmp);
-	fread(&tmp, 1, 1, fdb);
-	printf("%x ", tmp);
-	fread(&tmp, 1, 1, fdb);
-	printf("%x ", tmp);
-	fread(&tmp, 1, 1, fdb);
-	printf("%x \n\n", tmp);
-
-	fseek(fdb, -4, SEEK_CUR);
 
 	int offset;
 	fread(&offset, sizeof(offset), 1, fdb);

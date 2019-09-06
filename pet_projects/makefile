@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-I.
 
-record_manager: main.o record_utils.o
+fdb: main.o record_utils.o
 	$(CC) -o $@ $^
 
 clean:
@@ -9,5 +9,4 @@ clean:
 
 allclean: clean
 	$(RM) *~ records.bin rrn_list.bin 
-
 
