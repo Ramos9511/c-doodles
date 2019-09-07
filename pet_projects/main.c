@@ -46,8 +46,9 @@ int main(int argc, char *argv[])
 			FILE *fin = fopen("insere.bin", "rb");
 			FILE *frn = fopen("rrn_list.bin", "a+b"); // control file
 			char *buffer = malloc(RECORD_SIZE); 
-			char *rrn = get_rrn(argc, argv); // get rrn from command line
 		
+			char *rrn = get_rrn(argc, argv); // get rrn from command line
+	
 			if (rrn) {
 				// duplicated rrn?
 				if (check_rrn(frn, rrn)) {
