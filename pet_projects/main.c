@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
 	}
 
 	char *arg = argv[1];
+
+	/*flow switch */
 	switch (arg[1]) {
 		case 'i':
 		{	
@@ -96,7 +98,9 @@ int main(int argc, char *argv[])
 
 		case 'r':
 		{
+			FILE *frm = fopen("remove.bin", "rb");
 			FILE *frn = fopen("rrn_list.bin", "r+b");
+			
 			char *rrn = get_rrn(argc, argv); // get rrn from command line
 					
 			int offset;
@@ -109,32 +113,33 @@ int main(int argc, char *argv[])
 				} else { 
 					fprintf(stderr, "rrn %s was not found!\n", rrn);
 					exit(1); 
-				} 
-				
-			} else {
-					
-				FILE *frm = fopen("remove.bin", "rb");
-
-				char frrn[3];
-				// remove all rrn listed on file
-				while (fread(&frrn, 3, 1, frm)) {
-					// if rrn exists proceed with removal
-					if (check_rrn(frn, frrn)) {
-						fread(&offset, 4, 1, frn);
-						remove_record(fdb, offset);
-						remove_rrn(frn); // update control file
-					} else { 
-						fprintf(stderr, "rrn %s was not found!\n", frrn);
-					}
-				
-					fseek(frm, 1, SEEK_CUR); //skip padding
-					fseek(frn, 0, SEEK_SET); // reset control file pointer
 				}
 
-				fclose(frm);	
+				fclose(fdb);
+				fclose(frn);
+				return EXIT_SUCCESS;	
+			} 
+					
+			/* rrn not give, remove all */
+
+			char frrn[3];
+			while (fread(&frrn, 3, 1, frm)) {
+
+				// if rrn exists proceed with removal
+				if (check_rrn(frn, frrn)) {
+					fread(&offset, 4, 1, frn);
+					remove_record(fdb, offset);
+					remove_rrn(frn); // update control file
+				} else { 
+					fprintf(stderr, "rrn %s was not found!\n", frrn);
+				}
+				
+				fseek(frm, 1, SEEK_CUR); //skip padding
+				fseek(frn, 0, SEEK_SET); // reset control file pointer
 			}
 
-			fclose(frn);	
+			fclose(fdb);
+			fclose(frn);
 			break;
 		}
 		
