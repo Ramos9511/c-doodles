@@ -75,38 +75,36 @@ void compress(FILE *fdb, FILE *frn) {
 		} 
 	}
 
-	fclose(frn);
-	fclose(fco);
-	fclose(fdb);
-	remove("records.bin");
-	rename(".compression_buffer.bin", "records.bin");
-
 	/* adjust index offsets since db has changed */
-	fdb = fopen("records.bin", "rb");
-	frn = fopen("rrn_list.bin", "wb"); // control file
+	fclose(frn);
 	fseek(fdb, 4, SEEK_SET);
+	fseek(fco, 0, SEEK_SET);
+	frn = fopen("rrn_list.bin", "wb"); // control file
 
 	char cc;
 	for (;;) {
 		// get offse to recrod
-		int offset = ftell(fdb);
+		int offset = ftell(fco);
 		// get record size
 		int rsize;
-		if(!fread(&rsize, sizeof(rsize), 1, fdb))
+		if(!fread(&rsize, sizeof(rsize), 1, fco))
 			break; // file pointer went past EOF
 		// get rrn
 		char rrn[3];
-		fread(rrn, 3, 1, fdb);
+		fread(rrn, 3, 1, fco);
 		if (rrn[0] != '*') {
 			// write info to control file
 			fwrite(rrn, 3, 1, frn);
 			fwrite(&offset, sizeof(offset), 1, frn);
 		}
 		// positioning pointer to next record
-		fseek(fdb, rsize - 7, SEEK_CUR);
+		fseek(fco, rsize - 7, SEEK_CUR);
 	}
 
-	
+	// delete old db file and rename compressed version
+	fclose(fco);
+	remove("records.bin");
+	rename(".compression_buffer.bin", "records.bin");
 
 }
 

@@ -27,6 +27,10 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include "utils.h"
+#include "input_utils.h"
+#include "index_utils.h"
 #include "record_utils.h"
 
 int main(int argc, char *argv[])
@@ -45,20 +49,20 @@ int main(int argc, char *argv[])
 		{	
 			FILE *fin = fopen("insere.bin", "rb");
 			FILE *frn = fopen("rrn_list.bin", "a+b"); // control file
+			
 			char *buffer = malloc(RECORD_SIZE); 
-		
 			char *rrn = get_rrn(argc, argv); // get rrn from command line
 	
 			if (rrn) {
+				
 				// duplicated rrn?
 				if (check_rrn(frn, rrn)) {
 					fprintf(stderr, "rrn %s not available!\n", rrn);
-					exit(1);
+					exit(EXIT_FAILURE);
 				}
 
 				// search rrn pos in fin and set stream position
-				int rrn_offset = search_rrn(fin, rrn);
-				fseek(fin, rrn_offset, SEEK_SET);
+				fseek(fin, search_rrn(fin, rrn), SEEK_SET);
 
 				// read, treat and insert record
 				read_record(fin, buffer);
@@ -68,26 +72,31 @@ int main(int argc, char *argv[])
 				int curr_offset = ftell(fdb);
 				fwrite(rrn, 3, 1, frn);
 				fwrite(&curr_offset, sizeof(int), 1, frn);
-	
-			} else {
+
+				fclose(fin);
+				fclose(frn);
+				free(buffer);
+				return EXIT_SUCCESS;
+
+			} 
 					
-				// rrn not given, insert all records 
-				while (read_record(fin, buffer)) {
+			// rrn not given, insert all records 
+			
+			while (read_record(fin, buffer)) {
 
-					char rrn_tmp[3]; memcpy(rrn_tmp, buffer + 4, 3); 	
+				char rrn_tmp[3]; memcpy(rrn_tmp, buffer + 4, 3); 	
 
-					// duplicated rrn?
-					if (check_rrn(frn, rrn_tmp)) {
-						fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
-					} else {
-						insert_record(buffer, fdb);
-						// write record rrn to control file
-						fwrite(buffer + 4, 3, 1, frn);
-						// get offset returned and write to control file
-						int curr_offset = ftell(fdb);
-						fwrite(&curr_offset, sizeof(curr_offset), 1, frn);
-						fseek(frn, 0, SEEK_SET);
-					}
+				// duplicated rrn?
+				if (check_rrn(frn, rrn_tmp)) {
+					fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
+				} else {
+					insert_record(buffer, fdb);
+					// write record rrn to control file
+					fwrite(buffer + 4, 3, 1, frn);
+					// get offset returned and write to control file
+					int curr_offset = ftell(fdb);
+					fwrite(&curr_offset, sizeof(curr_offset), 1, frn);
+					fseek(frn, 0, SEEK_SET);
 				}
 			}
 	
@@ -96,7 +105,6 @@ int main(int argc, char *argv[])
 			free(buffer);
 			break;
 		}
-
 		case 'r':
 		{
 			FILE *frm = fopen("remove.bin", "rb");
@@ -146,13 +154,14 @@ int main(int argc, char *argv[])
 		
 		case 'c':
 		{
-			// compress stuff
+			FILE *frn = fopen("rrn_list.bin", "rb");
+			compress(fdb, frn);
 			break;
 		}
 
 		case 'd':
 		{
-			// dump stuff
+			hexdump(fdb);	
 			break;
 		}
 
@@ -169,6 +178,4 @@ int main(int argc, char *argv[])
 	
 	fclose(fdb);
 }
-
-
 
