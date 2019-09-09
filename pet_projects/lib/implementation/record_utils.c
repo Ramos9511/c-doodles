@@ -75,6 +75,7 @@ void compress(FILE *fdb, FILE *frn) {
 		} 
 	}
 
+	// swap old db file for compressed version
 	fclose(frn);
 	fclose(fco);
 	fclose(fdb);
@@ -105,9 +106,6 @@ void compress(FILE *fdb, FILE *frn) {
 		// positioning pointer to next record
 		fseek(fdb, rsize - 7, SEEK_CUR);
 	}
-
-	
-
 }
 
 void insert_record(char *record, FILE *fdb)

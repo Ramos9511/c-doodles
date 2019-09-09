@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-I.
+CFLAGS=-I. -Ilib/headers
 
-fdb: main.o record_utils.o utils.o index_utils.o input_utils.o
+fdb: main.o ./lib/implementation/record_utils.o ./lib/implementation/utils.o ./lib/implementation/index_utils.o ./lib/implementation/input_utils.o
 	$(CC) -o $@ $^
 
 clean:
