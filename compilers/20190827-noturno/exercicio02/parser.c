@@ -12,8 +12,10 @@
 /*
  * lexer-to-parser interface 
  */
-int             lookahead;
-int             gettoken(FILE *);
+
+int lookahead;
+int  gettoken(FILE *);
+
 /*
  * adopted grammar: LL(1) for simple expressions 
  */
@@ -27,7 +29,6 @@ int             gettoken(FILE *);
 /*
  * grammar emulation functions 
  */
-
 
 int isOPLUS(void)
 {

@@ -15,19 +15,18 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <tokens.h>
+#include <stdlib.h>
 
 /*
  * @ skipspaces:: 
  */
+
 void
 skipspaces(FILE * tape)
 {
-    int             head;
-
+    int head;
     while (isspace(head = getc(tape)));
-
     ungetc(head, tape);
-
 }
 
 /*
@@ -49,6 +48,99 @@ isID(FILE * tape)
     return 0;
 }
 
+// MARCELINO
+// =============================================================================
+
+/**********************************************************************
+ * verify exponential
+ * 0 if false
+ * 1 if true
+ * ********************************************************************/
+int isEE(FILE *tape)
+{
+	int i = 0, *head = malloc(sizeof(int));
+
+	if(toupper(head[i]=getc(tape)) == 'E')
+	{
+		i++;
+		head = realloc(head,sizeof(int)*i);
+		if((head[i]= getc(tape)) == '+' || head[i] == '-'){
+			i++;
+			head = realloc(head,sizeof(int)*i);
+		} else {
+			ungetc(head[i], tape);
+		}
+
+		if(isdigit(head[i] = getc(tape))){
+			i++;
+			head = realloc(head,sizeof(int)*i);
+			while(isdigit(head[i] = getc(tape))){
+				i++;
+				head = realloc(head,sizeof(int)*i);
+			}
+			ungetc(head[i], tape);
+			head[i] = 0;
+			return 1;
+		}
+		for(; i > 0; i--) ungetc(head[i],tape);
+	}
+	ungetc(head[0], tape);
+	free(head);
+	return 0;
+}
+
+/***********************************************************************
+ * REGEX:
+ *		UINT = [1-9][0-9]*|0
+ *		FRAC = UINT'.'[0-9]* | '.'[0-9]+
+ *		EE   = [eE]['+''-']?[0-9]+
+ *		FLT  = UINT EE | FRAC EE?
+ ***********************************************************************/
+
+int isNUM(FILE *tape)
+{
+	int head = getc(tape);
+	int token = -1;
+	if(isdigit(head)){
+		token = UINT;
+		if(head == '0')
+		       	head = getc(tape);
+		else
+			while(isdigit(head = getc(tape)));
+		
+		if(head == '.'){
+			token = FLT;
+			while(isdigit(head = getc(tape)));
+		}	
+
+		ungetc(head, tape);
+		if(isEE(tape))
+			token = FLT;
+		
+		return token;
+	}else if(head == '.') {
+		if(isdigit(head = getc(tape)))
+		{
+			while(isdigit(head = getc(tape)));
+			ungetc(head,tape);
+			if(isEE(tape))
+				return FLT;
+			return token = FLT;
+		}
+		ungetc(head,tape);
+		ungetc('.', tape);
+		return 0;
+	}
+
+	ungetc(head,tape);
+	return 0;
+
+}
+
+/* ======================================================================== */
+
+
+/*
 int
 isDEC(FILE * tape)
 {
@@ -66,6 +158,7 @@ isDEC(FILE * tape)
     ungetc(head, tape);
     return 0;
 }
+*/
 
 int isASGN(FILE *tape)
 {
