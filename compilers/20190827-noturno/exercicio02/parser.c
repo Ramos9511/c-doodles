@@ -57,23 +57,26 @@ int isOTIMES(void)
 void
 expr(void)
 {
-    int oplus;
-    int otimes;
+    int oplus;// = 0
+    int otimes; // = 0
 __term:
     //term();
 __fact:  
     //fact();
     switch (lookahead) {
     case ID:
+	    // print lexeme here
         match(ID);
 	if (lookahead == ASGN) {
 		match(ASGN); expr();
 	}
         break;
     case UINT:
+	    // print UINT here
         match(UINT);
         break;
     case FLT:
+	    // print FLT here
 	match(FLT);
 	break;
     default:
@@ -83,14 +86,20 @@ __fact:
     }
     /* abstracts { otimes fact } */
     if(otimes = isOTIMES()){
+	    // print otimes here
         match(otimes);
+            // otimes = 0
         goto __fact;
     }
     /* abstracts { oplus term } */
     if(oplus = isOPLUS()){
+	    // print oplus here
         match(oplus);
+            // oplus = 0
         goto __term;
     }
+
+
 }
 
 /* deprecated
@@ -125,7 +134,7 @@ __fact:
     }
 
 }
-*/
+
 
 void
 quoc(void)
@@ -146,7 +155,7 @@ quoc(void)
 	exit(-3);
     }
 }
-
+*/
 /* deprecated 
 void 
 fact(void)
@@ -174,6 +183,7 @@ fact(void)
 /*
  * lexer-to-parser interface: 
  */
+
 void
 match(int expected)
 {
