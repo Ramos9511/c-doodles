@@ -4,7 +4,8 @@
 *	DESCRIPTION: Implementation of api functions
 *	for management of record files using avail list 
 * 
-*	AUTHOR: gfvante - 31 August 2019
+*	AUTHORS: Gabirel Fioravante, Mayara Barros, 
+*	Vinicius Noriyuki - 30 August 2019
 *
 *   NOTE ======================================== 
 *   Error handling has not been implemented 

@@ -2,9 +2,10 @@
 *	FILE: utils.c 
 *
 *	DESCRIPTION: implementation of generic 
-	utilitary functions
+*	utilitary functions
 * 
-*	AUTHOR: gfvante - 31 August 2019
+*	AUTHORS: Gabirel Fioravante, Mayara Barros, 
+*	Vinicius Noriyuki - 30 August 2019
 *
 *   NOTE ======================================== 
 *   Error handling has not been implemented 

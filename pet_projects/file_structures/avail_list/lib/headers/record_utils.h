@@ -13,7 +13,8 @@
 *   record (in bytes), this module offers interface routines 
 *	to facilitate handling of such files.
 *   
-*	AUTHOR: gfvante - 31 August 2019
+*	AUTHORS: Gabirel Fioravante, Mayara Barros, 
+*	Vinicius Noriyuki - 30 August 2019
 *
 *   NOTE ======================================== 
 *   Error handling has not been implemented 

@@ -1,21 +1,28 @@
-/*************************************************
+/**
+* 	FILENAME: stack_list.h
 *
-* FILENAME: stack_list.h
+* 	DESCRIPTION: Stack api functions prototypes
+*	and required data structures (e.g. Node)
 *
-* DESCRIPTION: Stack api functions prototypes
-*	           and required data structures (e.g. Node)
+* 	AUTHOR: gfvante - 06 August 2019
 *
-* AUTHOR: WesternSage - 06 August 2019
-*
-*************************************************/
+*   NOTE ====================================== 
+*   Error handling has not been implemented 
+*   for clarity purposes. If you plan on using 
+*   this code as part of a real application you 
+*   you should implement it! 
+*   ===========================================
+*/
 
 #ifndef __STACK_H__
 #define __STACK_H__
 
 #include <stdbool.h>
-#include "type_definitions.h"
 
-// TODO : Implement is_empty func
+struct Node {
+	void *data;
+	struct Node *next;
+} typedef Node;
 
 Node *stack_new();
 void *stack_top(Node *head);
