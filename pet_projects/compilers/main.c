@@ -4,11 +4,11 @@
 
 /** system include libraries **/
 #include <stdio.h>
+#include <ctype.h>
 
 /** NOTE: compile with -I. directive flag **/
 #include <main.h>
 #include <parser.h>
-#include <ctype.h>
 #include <lex_par_interface.h>
 
 // defining extern variables
@@ -20,14 +20,19 @@ int main(int argc, char *argv[])
     source = stdin;
     object = stdout;
 
-	fputs("Testing lexer:\n", stdout);
+	// testing parser
+
+	//fputs("Testing lexer:\n", stdout);
 
 	lookahead = gettoken(source);
-	fprintf(stdout, "Token: %d\n", lookahead);
+	
+	//char rejected = getc(source);
+	//fprintf(stdout, "First rejected token was %x\n", rejected);
 
-	char rejected = getc(source);
-	if (isalnum(rejected))
-		fprintf(stdout, "The token %c was rejected", rejected);
+	// testing parser
+	//fputs("Testing parser:\n", stdout);
+
+	expr();
 
 }
 

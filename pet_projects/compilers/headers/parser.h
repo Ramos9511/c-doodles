@@ -1,8 +1,9 @@
 /*
  * @<parser.h>::
  */
-void            expr(void);
-void            rest(void);
-void            quoc(void);
-void            term(void);
-void            fact(void);
+int isOPLUS(void);
+int isOTIMES(void);
+void expr(void);
+
+// tmp utilitary
+void print_lexeme();

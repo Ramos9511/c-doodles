@@ -5,6 +5,7 @@
 #include <main.h>
 #include <lexer.h>
 #include <stdlib.h>
+#include <lex_par_interface.h>
 
 // Interface functions
 
@@ -29,7 +30,7 @@ gettoken(FILE * source)
 
     if (token = isID(source))
         return token;
-    if (token = isDEC(source))
+    if (token = isNUM(source))
         return token;
     if (token = isASGN(source))
         return token;
@@ -37,6 +38,7 @@ gettoken(FILE * source)
     /*
      * return default token, say an ASCII value 
      */
+
     return -10;
 }
 
@@ -53,3 +55,7 @@ match(int expected)
         exit(-2);
     }
 }
+
+
+
+
