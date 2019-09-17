@@ -37,6 +37,7 @@ int is_bst(TNode *root);
 TNode *new_node(int data);
 int search(TNode *root, int data);
 void insert(TNode **root, int data);
+TNode *delete(TNode *root, int data);
 void in_order_traversal(TNode *root);
 void pre_order_traversal(TNode *root);
 void post_order_traversal(TNode *root);
@@ -69,7 +70,11 @@ int main(int argc, char *argv[])
 	in_order_traversal(root);
 	fputs("\nPostorder traversal: ", stdout);
 	post_order_traversal(root);
-	if (is_bst(root)) fputs("\nTree is a BST!: ", stdout);
+	if (is_bst(root)) fputs("\nTree is a BST!", stdout);
+	delete(root, 7);
+	fputs("\nInorder traversal: ", stdout);
+	in_order_traversal(root);
+
 }
 
 // new empty tree
@@ -201,4 +206,31 @@ void post_order_traversal(TNode *root)
 	fprintf(stdout, "%d ", root->data);
 }
 
+TNode *delete(TNode *root, int data)
+{
+	if (root == NULL) 
+		return root;
+	else if (data < root->data)
+		delete(root->left, data);
+	else if (data > root->data)
+		delete(root->right, data);
+	else { // found it, deleting...
+		// case 0: no child
+		if (root->left == NULL && root->right == NULL) {
+			free(root);
+			root = NULL;
+		// case 1: 1 child
+		} else if (root->left == NULL) {
+			TNode *tmp = root;
+			root = root -> right;
+			free(tmp);
+		// case 3: 2 children
+		} else {
+			int tmp = min(root->right);
+			root->data = tmp;
+			root->right = delete(root->right, tmp);
+		}
+	}
 
+	return root;
+}
