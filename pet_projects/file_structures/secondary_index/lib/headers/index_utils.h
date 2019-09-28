@@ -19,6 +19,6 @@
 #pragma once
 #include <stdio.h>
 
-void remove_rrn(FILE *frn);				// remove rrn entry from index file
 int check_rrn(FILE *frn, char *rrn);    // search for rrn in index file
+int check_name(FILE *fn, char *name);   // search for name in seconday index file
 

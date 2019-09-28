@@ -20,19 +20,6 @@
 #include <string.h>
 #include "index_utils.h"
 
-void remove_rrn(FILE *frn)
-{
-	/* Description: remove rrn entry
-	   from rrn control file */
-
-	// move pointer to beginning of entry
-	fseek(frn, -7, SEEK_CUR); 
-
-	// remove rrn entry
-	char blank[7] = {'\0'};			// 8 is size of rrn entry in control file
-	fwrite(blank, sizeof(blank), 1, frn); 
-}
-
 int check_rrn(FILE *frn, char *rrn)
 {
 	/* Description: Search for 
@@ -50,5 +37,37 @@ int check_rrn(FILE *frn, char *rrn)
 	}
 
 	return 0;
+}
+
+int check_name(FILE *fn, char *name)
+{
+	/* Description: Search for 
+   	   given name  in name
+   	   control file */
+
+	char c;
+	int i = 0, no_match = 0, nsize;
+
+	while (fread(&c, 1, 1, fn)) {
+
+		if (c == '#') {
+			
+			if (!no_match && i == strlen(name))
+				return 1;
+
+			i = 0;
+			no_match = 0;
+			fseek(fn, 4, SEEK_CUR);
+			continue;
+		}
+
+		if (i > strlen(name) || c != name[i])
+			no_match = 1;
+
+		i++;
+	}
+
+	return 0;
+
 }
 

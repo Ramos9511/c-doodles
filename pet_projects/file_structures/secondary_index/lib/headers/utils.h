@@ -19,5 +19,5 @@
 
 void help();							// print help menu
 void hexdump(FILE *f);					// hexadecimal dump of give file
-char *get_rrn(int argc, char **argv);   // get rrn arg from command line
+char *get_arg(int argc, char **argv);   // get rrn arg from command line
 

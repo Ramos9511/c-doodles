@@ -8,5 +8,4 @@ clean:
 	$(RM) *.o
 
 allclean: clean
-	$(RM) *~ records.bin rrn_list.bin 
-
+	$(RM) *~ records.bin rrn_list.bin name_list.bin 

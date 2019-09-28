@@ -17,8 +17,9 @@
 */
 
 #include <stdio.h>
-#include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 #include "input_utils.h" 
 
 int search_rrn(FILE *fin, char *rrn) 		// shoudl probably rename this to get_offset or something
@@ -100,5 +101,23 @@ int read_record(FILE *fin, char *record)
 			return 1;
 		}
 	}
+}
+
+int read_name(FILE *fn, char **name) 
+{
+	fseek(fn, 8, SEEK_CUR);
+
+	char tmp = '@';
+	int nsize = 0;
+	while (tmp != '#') {
+		fread(&tmp, 1, 1, fn);
+		nsize++;
+	}
+
+	*name = malloc(nsize);
+	fseek(fn, -nsize, SEEK_CUR);
+	fread(*name, --nsize, 1, fn); 
+
+	return nsize;
 }
 

@@ -24,7 +24,7 @@
 // hexdump macro
 #define BYTES_PER_LINE 16
 
-void help()
+void help() 	// ADJUST HELP SUMMARY TO NEW FUNCTIONALITY
 {
 	/* Description: Prints user help menu */
 		fputs(
@@ -33,20 +33,20 @@ void help()
 Synopsis: \n\
 \tfdb ACTION [RRN] \n\
 Description: \n\
-\tsimple file handler toll for concept ilustration, offers insertion, removal, compression, hexdumping and loading roperations \n\
+\tsimple file handler toll for concept ilustration, offers insertion, hexdumping, loading and searching by rrn/name operations \n\
 Mandatory arguments (actions): \n\
 \t-i [RRN] \n\
 \t\tinsertion, record RRN or all(in file) if RRN not given \n\
-\t-r [RRN] \n\
-\t\tremoval, record RRN or all(in file) if RRN not given \n\
-\t-c \n\
-\t\tcompression \n\
+\t-p [RRN] \n\
+\t\tsearch primary, search records of [RRN] or all(in file) if RRN not given \n\
+\t-s [NAME] \n\
+\t\tsearch secondary, search records of [NAME] or all(in file) if NAME not given \n\
 \t-d \n\
 \t\thexdump", stdout);
 
 }
 
-char *get_rrn(int argc, char **argv)
+char *get_arg(int argc, char **argv)
 {
 	/* Description: get rrn from command line */
 	if (argc == 3) 
