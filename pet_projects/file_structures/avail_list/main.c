@@ -85,7 +85,8 @@ int main(int argc, char *argv[])
 			
 			while (read_record(fin, buffer)) {
 
-				char rrn_tmp[3]; memcpy(rrn_tmp, buffer + 4, 3); 	
+				char rrn_tmp[3]; 
+				memcpy(rrn_tmp, buffer + 4, 3); 	
 
 				// duplicated rrn?
 				if (check_rrn(frn, rrn_tmp)) {
@@ -122,7 +123,7 @@ int main(int argc, char *argv[])
 					remove_rrn(frn); // update control file
 				} else { 
 					fprintf(stderr, "rrn %s was not found!\n", rrn);
-					exit(1); 
+					exit(EXIT_FAILURE); 
 				}
 
 				fclose(fdb);

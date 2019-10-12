@@ -117,8 +117,15 @@ void insert_record(char *record, FILE *fdb)
 	// position stream back on header
 	fseek(fdb, 0, SEEK_SET);
 
+/*
+header --> (size)*(offset)<record content....> (CONTEUDO DO ARQUIVO)...(size)*(offset)<record content....>.....(size)*(offset)<record content....>
+*record = ? ;D  ;
+
+
+*/
+
 	// get record size <-- read int from buffer (4 bytes)
-	int rsize = *((int*)record);
+	int rsize = *((int*)record); 
 
 	// get first avail pos
 	int offset, offset_prev = 0;
@@ -187,7 +194,7 @@ void remove_record(FILE *fdb, int rrn_offset)
 	fseek(fdb, -sizeof(offset), SEEK_CUR);
 	fwrite(&rrn_offset, sizeof(rrn_offset), 1, fdb);
 
-	// link new avail pos to list tail
+	// mark records as removed
 	fseek(fdb, rrn_offset + 4, SEEK_SET);
 	fputc('*', fdb);
 	fwrite(&offset, sizeof(offset), 1, fdb);

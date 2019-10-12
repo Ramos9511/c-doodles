@@ -21,7 +21,7 @@
 #include <ctype.h>
 #include "input_utils.h" 
 
-int search_rrn(FILE *fin, char *rrn) 		// shoudl probably rename this to get_offset or something
+int search_rrn(FILE *fin, char *rrn) 		// should probably rename this to get_offset or something
 {
 	/* Description: Search fin for
 	   given rrn, returning an offset
@@ -37,7 +37,8 @@ int search_rrn(FILE *fin, char *rrn) 		// shoudl probably rename this to get_off
 
 		// load rrn in memory
 		char rrn_byte[3];
-		fread(rrn_byte, 3, 1, fin);
+		fread(rrn_byte, 3, 1, fin); 
+
 		fseek(fin, -3, SEEK_CUR);
 
 		// check rrn match and return offset

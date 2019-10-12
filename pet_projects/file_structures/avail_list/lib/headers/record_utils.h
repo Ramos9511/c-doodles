@@ -1,17 +1,7 @@
 /**
 *	FILE: record_utils.h 
 *
-*	DESCRIPTION: Given the following
-*	data disposition in a binary file 
-*   of variable record and field size,
-*
-*	===================================================================
-*	< (size)(RRN) # Field # Field # Field # Field >< Next record > ...
-*	===================================================================   
-*
-*	where '(size)' indicates the size of its respective 
-*   record (in bytes), this module offers interface routines 
-*	to facilitate handling of such files.
+*	DESCRIPTION: header file for record_utils.c 
 *   
 *	AUTHORS: Gabirel Fioravante, Mayara Barros, 
 *	Vinicius Noriyuki - 30 August 2019
