@@ -96,11 +96,17 @@ int main(int argc, char *argv[])
 			
 			while (read_record(fin, buffer)) {
 
-				char rrn_tmp[3]; memcpy(rrn_tmp, buffer + 4, 3); 	
+				//=============== BUG bzzzZzZZz ==============
+				char rrn_tmp[3]; 
+				memcpy(rrn_tmp, buffer + 4, 3); 
+				//=============== BUG bzzzZzZZz ==============	
 
 				// duplicated rrn?
-				if (check_rrn(frn, rrn_tmp)) {
 
+				//=============== BUG bzzzZzZZz ==============
+				if (check_rrn(frn, rrn_tmp)) {
+				//=============== BUG bzzzZzZZz ==============
+				
 					fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
 
 				} else {
@@ -159,7 +165,11 @@ int main(int argc, char *argv[])
 					// read and print record
 					char *buffer = malloc(rsize);
 					fread(buffer, rsize, 1, fdb);
+
+					// --> (size)001#joao#Maritima#Automovel#(size)002#..
+					// --> (size)001#joao#Maritima#Automovel'\0'(size=4bytes)002#..
 					buffer[rsize - 5] = '\0';
+
 					printf("%s\n", buffer);
 
 				} else { 
@@ -251,6 +261,7 @@ int main(int argc, char *argv[])
 
 				while (fread(&c, 1, 1, fsin)) {
 
+					// skip non-printable characters
 					if (isprint(c)) {
 						if (latch) latch = 0;
 						nmsize++;
