@@ -28,11 +28,11 @@ int check_rrn(FILE *frn, char *rrn)
 
 	char tmp[3];
 	while (fread(tmp, 3, 1, frn)) {
-
 		// return if duplicate
-		if (memcmp(tmp, rrn, 3) == 0)
+		if (memcmp(tmp, rrn, 3) == 0) {
 			return 1; 
-		
+		}
+	
 		fseek(frn, 4, SEEK_CUR);
 	}
 

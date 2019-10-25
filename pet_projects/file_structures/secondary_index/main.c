@@ -96,19 +96,13 @@ int main(int argc, char *argv[])
 			
 			while (read_record(fin, buffer)) {
 
-				//=============== BUG bzzzZzZZz ==============
 				char rrn_tmp[3]; 
 				memcpy(rrn_tmp, buffer + 4, 3); 
-				//=============== BUG bzzzZzZZz ==============	
 
 				// duplicated rrn?
-
-				//=============== BUG bzzzZzZZz ==============
 				if (check_rrn(frn, rrn_tmp)) {
-				//=============== BUG bzzzZzZZz ==============
-				
-					fprintf(stderr, "rrn %s not available!\n", rrn_tmp);
-
+						
+					fprintf(stderr, "rrn not available!\n", rrn_tmp);					fseek(frn, 0, SEEK_SET);
 				} else {
 
 					insert_record(buffer, fdb);
