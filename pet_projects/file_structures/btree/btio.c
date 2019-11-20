@@ -47,14 +47,16 @@ void putroot(short root)
   write(btfd, &root, 2);
 }
 
-short create_tree()
+short create_tree(char key[], int offset)
 {
-  char key;
-  btfd = creat("btree.dat", PMODE);
+  //char key;
+  btfd = creat("btree.dat", PMODE); /*seria o fopen(btree.bin "wt+")*/
+  printf("\nTree created");
+  putroot(NIL);
   close(btfd); /* Have to close and reopen to insure  */
   btopen(); /* read/write access on many systems.  */
-  key = getchar(); /* Get first key.  */
-  return (create_root(key, NIL, NIL));
+  //key = getchar(); /* Get first key.  */
+  return (create_root(key, offset, NIL, NIL));
 }
 
 short getpage()
@@ -64,6 +66,7 @@ short getpage()
   return ((short)addr / PAGESIZE);
 }
 
+/*read btree page*/
 int btread(short rrn, BTPAGE* page_ptr)
 {
   long addr;
