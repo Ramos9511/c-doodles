@@ -8,6 +8,7 @@
 #define NOKEY '@'
 #define NO 0
 #define YES 1
+#define STRUCT_SIZE 50
 
 typedef struct { /*btree structure - page*/
   short keycount; /* number of keys in page	*/
@@ -21,7 +22,7 @@ typedef struct { /*btree structure - page*/
 
 /*arquivo seguradora*/
 typedef struct input_record {
-	char codigo[4];
+	int codigo;
 	char nome[50];
 	char seguradora[50];
 	char tipo_seg[30];
