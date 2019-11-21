@@ -12,10 +12,9 @@
 
 typedef struct { /*btree structure - page*/
   short keycount; /* number of keys in page	*/
-  //char key[MAXKEYS]; /* the actual keys		*/
-  char key[MAXKEYS][4]; /*string key - codigo da seguradora*/
+  char key[MAXKEYS]; /* the actual keys		*/
+  //char key[MAXKEYS][4]; /*string key - codigo da seguradora*/
   short child[MAXKEYS + 1]; /* ptrs to rrns of descendants  */
-  int offset[MAXKEYS] /*records offsets*/
 } BTPAGE;
 
 #define PAGESIZE sizeof(BTPAGE)
